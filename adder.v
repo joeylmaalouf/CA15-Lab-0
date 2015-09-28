@@ -1,6 +1,7 @@
 `define XOR xor #50
 `define AND and #50
 `define OR or #50
+`define NOT not #50
 
 module behavioralFullAdder(sum, carryout, a, b, carryin);
   output sum, carryout;
@@ -41,6 +42,7 @@ module testFullAdder;
   structuralFullAdder test (test_sum, test_carryout, a, b, carryin);
 
   initial begin
+    $display("Testing 1-bit Full Adder");
     $display("Cin A B | Sum Cout | Expected");
     carryin = 0; a = 0; b = 0; #1000
     $display(" %b  %b %b |  %b    %b  | %b  %b ", carryin, a, b, test_sum, test_carryout, sum, carryout);
