@@ -27,11 +27,27 @@ module FullAdder4bit (
   input[3:0] b      // Second operand in 2's complement format
 );
 wire carryover1, carryover2, carryover3;
-structuralFullAdder adder1(sum[0], carryover1, a[0], b[0], 0);
+structuralFullAdder adder1(sum[0], carryover1, a[0], b[0], 1'b0);
 structuralFullAdder adder2(sum[1], carryover2, a[1], b[1], carryover1);
 structuralFullAdder adder3(sum[2], carryover3, a[2], b[2], carryover2);
 structuralFullAdder adder4(sum[3], carryout, a[3], b[3], carryover3);
 `XOR overflow_check(overflow, carryout, carryover3);
+endmodule
+
+module test4bitAdder;
+reg [3:0] a = 4'sb0000; // Init to signed 4 bit numbers
+reg [3:0] b = 4'sb0000; // Init to 0
+wire [3:0] sum;
+wire carryout, overflow;
+FullAdder4bit adder(sum, carryout, overflow, a, b);
+
+initial begin
+a = 4'sb0101; // Set values to test
+b = 4'sb1010;
+$display(" Sum  | Cout | Overflow?");
+#500 // It takes a long time to changes to propogate, unsure how to reduce this
+$display(" %b | %b    | %b", sum, carryout, overflow);
+end
 endmodule
 
 module testFullAdder;
