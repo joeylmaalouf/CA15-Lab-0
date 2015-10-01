@@ -10,7 +10,7 @@
 
 ![Waveforms](waveforms.png)
 
-Our worst case delay is 400ns.
+Our worst case delay is 400ns. Since we always delayed by 500 in the code, our waveform diagram is perfectly accurate.
 
 
 ### Verilog Tests
