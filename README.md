@@ -6,8 +6,7 @@
 
 ### Waveforms
 ![Waveforms](waveforms.png)
-worst case 400ns
-...
+Our worst case delay is 400ns.
 
 ### Verilog Tests
 ```
@@ -37,10 +36,12 @@ A    | B    | Sum  | Cout | Overflow
 1100 | 1010 | 0110 | 1    | 1
 1010 | 1001 | 0011 | 1    | 1
 ```
+We chose these sum-testing values because from them, we expect no carryout or overflow, which lets us focus on making sure the sum itself is correct. Similarily, the values we picked for testing carryout and overflow only test those respective outputs to make sure that they all act properly. The final test suite uses numbers that make sure that all of the outputs can fire correctly.
+The general idea behind the test benches was to test every individual output on its own before testing them all together. The test bench was designed this way to illuminate any errors on a specific level along the adder process. We didn't encounter any errors on any individual level, and when we tested them on a systemic level there couldn't be any issues.
 
 ### FPGA Tests
-...
+We ran the same 16 tests (listed above) that we used on the Verilog simulation, and each one worked. The image below shows test #16.
 ![FPGA Test](fpga.jpg)
 
 ### Summary Statistics
-...
+![Summary Statistics](summary.png)
