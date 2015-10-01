@@ -36,18 +36,58 @@ module FullAdder4bit (
 endmodule
 
 module test4bitAdder;
-  reg [3:0] a = 4'sb0000; // Init to signed 4 bit numbers
-  reg [3:0] b = 4'sb0000; // Init to 0
+  reg [3:0] a = 4'sb0000; // Init type to signed 4 bit numbers
+  reg [3:0] b = 4'sb0000; // Init value to 0
   wire [3:0] sum;
   wire carryout, overflow;
   FullAdder4bit adder(sum, carryout, overflow, a, b);
 
   initial begin
-    a = 4'sb0101; // Set values to test
-    b = 4'sb1010;
-    $display(" Sum  | Cout | Overflow?");
-    #500 // It takes a long time to changes to propogate, unsure how to reduce this
-    $display(" %b | %b    | %b", sum, carryout, overflow);
+    $display("Testing 4-bit Full Adder");
+
+    $display("Testing Sum:");
+    $display("A    | B    | Sum  | Cout | Overflow");
+    a = 4'sb0010; b = 4'sb0010; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb1001; b = 4'sb0100; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb0100; b = 4'sb1010; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb0001; b = 4'sb0010; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+
+    $display("Testing Carryout:");
+    $display("A    | B    | Sum  | Cout | Overflow");
+    a = 4'sb0001; b = 4'sb1111; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb0011; b = 4'sb1110; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb1100; b = 4'sb0110; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb0110; b = 4'sb1101; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+
+    $display("Testing Overflow:");
+    $display("A    | B    | Sum  | Cout | Overflow");
+    a = 4'sb0101; b = 4'sb0100; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb0111; b = 4'sb0111; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb0110; b = 4'sb0011; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb0101; b = 4'sb0111; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+
+    $display("Testing Everything:");
+    $display("A    | B    | Sum  | Cout | Overflow");
+    a = 4'sb1000; b = 4'sb1000; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb1000; b = 4'sb1111; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb1100; b = 4'sb1010; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
+    a = 4'sb1010; b = 4'sb1001; #500
+    $display("%b | %b | %b | %b    | %b", a, b, sum, carryout, overflow);
   end
 endmodule
 
