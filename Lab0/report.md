@@ -1,6 +1,3 @@
-# CA15-Lab-0
-
-
 ## Computer Architecture Lab 0 Writeup
 
 ##### Joey Maalouf, Daniel Bishop, Sean Carter, Gabriel Butterick
