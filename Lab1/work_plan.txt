@@ -1,1 +1,5 @@
-TODO: everything
+| Chunk                | ETC    | Done By:           |
+|----------------------|--------|--------------------|
+| Logical Gates        | 1 Hour | Start date         |
+| Adder and Subtracter | 1 Hour | Start date         |
+| Shifter Lefter       | 1 Hour | Start date + 1 day |
