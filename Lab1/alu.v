@@ -10,7 +10,7 @@
 `define NAND 4'd5
 `define NOR  4'd6
 `define OR   4'd7
-`define SHFT 4'd8
+`define SHFT 4'd8 // our extra shift operation forces us to use 4 bits, not 3
 
 module ALU(
   output reg[31:0] result,
@@ -19,7 +19,7 @@ module ALU(
   output           overflow,
   input[31:0]      operandA,
   input[31:0]      operandB,
-  input[2:0]       command
+  input[3:0]       command // see bit note about extra operation above
 );
   wire[31:0] results[0:8];
   reg clock;
@@ -30,7 +30,11 @@ module ALU(
   bitwiseINV  bNAND(results[`NAND], results[`AND]);
   bitwiseINV  bNOR (results[`NOR ], results[`OR ]);
   bitwiseSHFT bSHFT(results[`SHFT], operandA, clock);
+  initial begin
+    clock = 0;
+  end
   always @(command) begin // re-assign when the command is changed
+    clock = 1;
     case (command)
       `ADD:  begin result = results[`ADD ]; end
       `SUB:  begin /**/ end
@@ -42,23 +46,21 @@ module ALU(
       `OR:   begin result = results[`OR  ]; end
       `SHFT: begin result = results[`SHFT]; end
     endcase
+    #2000;
     clock = 0;
-    #10;
-    clock = 1;
-    #10;
   end
 endmodule
 
 module testALU();
   reg[31:0] a, b;
-  reg[2:0] command;
+  reg[3:0] command;
   wire [31:0] result;
   wire carryout, zero, overflow;
   ALU alu(result, carryout, zero, overflow, a, b, command);
   initial begin
-    a = 32'b01000000100001000001010001001100;
+    a = 32'b00000000000001000001000001001100;
     b = 32'b00001000101001001001000000001100;
-    #1000;
+    #10000;
     command = `ADD;  #1000;
     $display("ADD \n%b\n%b\n%b\n", a, b, result);
     command = `XOR;  #1000;
@@ -75,20 +77,3 @@ module testALU();
     $display("SHFT\n%b\n%b\n",     a,    result);
   end
 endmodule
-/*
-module testShifter();
-  wire[31:0] res;
-  reg[31:0] val;
-  reg clock;
-  bitwiseSHFT shifter(res, val, clock);
-  initial begin
-    val = 32'b11111111111111111111111111111101;
-    $display("%b", val);
-    clock = 0;
-    #10000;
-    clock = 1;
-    #10000;
-    $display("%b", res);
-  end
-endmodule
-*/
