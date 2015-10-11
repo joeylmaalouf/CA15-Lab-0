@@ -110,26 +110,3 @@ module bitwiseXOR(
 		end
 	end
 endmodule
-
-module test();
-  reg [31:0] a = 32'sb00000000100001000001000000001100;
-  reg [31:0] b = 32'sb00010000100000000001000000001100;
-  wire [31:0] out;
-  wire [31:0] out2;
-	wire [31:0] out3;
-	wire [31:0] out4;
-	wire [31:0] out5;
-  bitwiseAND myAnder(out, a, b);
-  bitwiseOR myOrrer(out2, a, b);
-	bitwiseINV myAnderInverter(out3, out);
-	bitwiseINV myOrrerInverter(out4, out2);
-	bitwiseXOR myXorrer(out5, a, b);
-  initial begin
-		#667;
-    $display("and     %b", out);
-		$display("not and %b", out3);
-    $display("or      %b", out2);
-		$display("not or  %b", out4);
-		$display("xor     %b", out5);
-  end
-endmodule

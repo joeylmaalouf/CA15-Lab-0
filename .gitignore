@@ -4,3 +4,9 @@ work/
 *.wlf
 lab_0/
 *.ini
+
+# ignore executables
+*.vvp
+
+# ignore test results
+*.vcd
