@@ -44,8 +44,8 @@ module testALU();
   wire carryout, zero, overflow;
   ALU alu(result, carryout, zero, overflow, a, b, command);
   initial begin
-    a = 32'sb01000000100001000001010001001100;
-    b = 32'sb00001000101001001001000000001100;
+    a = 32'b01000000100001000001010001001100;
+    b = 32'b00001000101001001001000000001100;
     #1000;
     command = `XOR;  #1000;
     $display("XOR \n%b\n%b\n%b\n", a, b, result);
