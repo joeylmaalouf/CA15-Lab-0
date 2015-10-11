@@ -6,3 +6,5 @@
 | Test Benches            | 2 Hours          | Sunday, October 11        |
 | Documentation           | 1 Hour           | Sunday, October 11        |
 | Report                  | 2 Hours          | Sunday, October 11        |
+
+Logical Operations: 4 hours oh my god send help
