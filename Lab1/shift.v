@@ -1,4 +1,4 @@
-`define NAND nand #50
+`define NAND nand #30
 
 module bitwiseSHFT(Q, D, clock);
   output[31:0] Q;

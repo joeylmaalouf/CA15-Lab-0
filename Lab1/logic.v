@@ -1,7 +1,7 @@
-`define AND and #20
-`define OR or #20
-`define NOT not #20
-`define XOR xor #20
+`define XOR xor #60
+`define AND and #30
+`define OR or #30
+`define NOT not #10
 
 module ander(
   output c,
@@ -47,7 +47,7 @@ module bitwiseAND(
     for (i = 0; i < 32; i = i + 1) begin
       placeholder_1 = a[i];
       placeholder_2 = b[i];
-      #20;
+      #30;
       out[i] = k;
     end
   end
@@ -66,7 +66,7 @@ module bitwiseOR(
     for (i = 0; i < 32; i = i + 1) begin
       p1 = a[i];
       p2 = b[i];
-      #20;
+      #40;
       out[i] = k;
     end
   end
@@ -105,7 +105,7 @@ module bitwiseXOR(
 		for (i = 0; i < 32; i = i + 1) begin
 			p1 = a[i];
 			p2 = b[i];
-			#20;
+			#60;
 			out[i] = k;
 		end
 	end
