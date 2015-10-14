@@ -24,7 +24,7 @@ module bitwiseADD(
   reg aBit, bBit, carryBit;
   FullAdder adder(outBit, carryout, aBit, bBit, carryBit);
   integer i;
-  initial begin
+  always @ (a or b or carryin) begin
 		
     #670;
     carryBit = carryin;
@@ -50,7 +50,7 @@ module bitwiseADD2(
   reg aBit, bBit, carryBit;
   FullAdder adder(outBit, carryout, aBit, bBit, carryBit);
   integer i;
-  initial begin
+  always @ (a or b or carryin) begin
 		
     #1311;
     carryBit = carryin;
@@ -74,7 +74,7 @@ module bitwiseINV(
 	wire k;
 	inverter myInverter(k, p);
 	integer i;
-	initial begin
+	always @ (a) begin
 		#26; //25 WONT WORK NUH UH NO SIR
 		for (i = 0; i < 32; i = i + 1) begin
 			p = a[i];
@@ -108,7 +108,7 @@ module bitwiseSUB(
 	bitwiseINV asdawsd(neg_b, b);
 	bitwiseADD adsadasda(out_placeholder, trash, neg_b, 1, 0);
 	bitwiseADD2 asdwds(output_temp, overflow_placeholder, a, out_placeholder, 0);
-	initial begin
+	always @ (a or b or carryin) begin
 		#1311;
 		#641;
 		overflow = overflow_placeholder;
@@ -125,7 +125,7 @@ module lessThan(
 	wire[31:0] output_temp;
 	bitwiseSUB asdasd(output_temp, overflow, a, b, 0);
 	`AND(isLessThan, output_temp[31], 1);
-	initial begin
+	always @ (a or b) begin
 		out = 32'b00000000000000000000000000000000;
 		#1953;
 		out[0] = isLessThan;

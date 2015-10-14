@@ -42,7 +42,7 @@ module bitwiseAND(
   wire k;
   ander myAnder(k, placeholder_1, placeholder_2);
   integer i;
-  initial begin
+  always @ (a or b) begin
     #0; //Lel this has to be here or it won't work    getrekt/10
     for (i = 0; i < 32; i = i + 1) begin
       placeholder_1 = a[i];
@@ -61,7 +61,7 @@ module bitwiseOR(
   wire k;
   orrer myOrrer(k, p1, p2);
   integer i;
-  initial begin
+  always @ (a or b) begin
     #0; //Lel this has to be here or it won't work    getrekt/10
     for (i = 0; i < 32; i = i + 1) begin
       p1 = a[i];
@@ -80,7 +80,7 @@ module bitwiseINV(
 	wire k;
 	inverter myInverter(k, p);
 	integer i;
-	initial begin
+	always @ (a) begin
 		#26; //25 WONT WORK NUH UH NO SIR
 		for (i = 0; i < 32; i = i + 1) begin
 			p = a[i];
@@ -100,7 +100,7 @@ module bitwiseXOR(
 	wire k;
 	integer i;
 	xorrer myXorrer(k, p1, p2);
-	initial begin
+	always @ (a or b) begin
 		#0; //Lel this has to be here or it won't work    getrekt/10
 		for (i = 0; i < 32; i = i + 1) begin
 			p1 = a[i];
