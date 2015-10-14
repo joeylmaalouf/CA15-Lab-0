@@ -60,26 +60,26 @@ module testALU();
   wire carryout, zero, overflow;
   ALU alu(result, carryout, zero, overflow, a, b, command);
   initial begin
-    a = 32'b00000000000001000001000001001100;
+    a = 32'b00000000000001000001000001001101;
     b = 32'b00001000101001001001000000001100;
-    #1000000;
-    command = `ADD;  #100000;
+    #1000;
+    command = `ADD;  #1000;
     $display("ADD \n%b\n%b\n%b\n", a, b, result);
-		command = `SUB;  #100000;
+		command = `SUB;  #1000;
 		$display("SUB \n%b\n%b\n%b\n", a, b, result);
-		command = `SLT;  #100000;
+		command = `SLT;  #1000;
 		$display("SLT \n%b\n%b\n%b\n", a, b, result);
-    command = `XOR;  #100000;
+    command = `XOR;  #1000;
     $display("XOR \n%b\n%b\n%b\n", a, b, result);
-    command = `AND;  #100000;
+    command = `AND;  #1000;
     $display("AND \n%b\n%b\n%b\n", a, b, result);
-    command = `OR;   #100000;
+    command = `OR;   #1000;
     $display("OR  \n%b\n%b\n%b\n", a, b, result);
-    command = `NAND; #100000;
+    command = `NAND; #1000;
     $display("NAND\n%b\n%b\n%b\n", a, b, result);
-    command = `NOR;  #100000;
+    command = `NOR;  #1000;
     $display("NOR \n%b\n%b\n%b\n", a, b, result);
-    command = `SHFT; #100000;
+    command = `SHFT; #1000;
     $display("SHFT\n%b\n%b\n",     a,    result);
   end
 endmodule
