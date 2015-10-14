@@ -60,20 +60,21 @@ module testALU();
   initial begin
     a = 32'b00000000000001000001000001001100;
     b = 32'b00001000101001001001000000001100;
-    #10000;
-    command = `ADD;  #1000;
+    #1000;
+    // iterate through commands with genvar?
+    command = `ADD;  #10000;
     $display("ADD \n%b\n%b\n%b\n", a, b, result);
-    command = `XOR;  #1000;
+    command = `XOR;  #10000;
     $display("XOR \n%b\n%b\n%b\n", a, b, result);
-    command = `AND;  #1000;
+    command = `AND;  #10000;
     $display("AND \n%b\n%b\n%b\n", a, b, result);
-    command = `OR;   #1000;
+    command = `OR;   #10000;
     $display("OR  \n%b\n%b\n%b\n", a, b, result);
-    command = `NAND; #1000;
+    command = `NAND; #10000;
     $display("NAND\n%b\n%b\n%b\n", a, b, result);
-    command = `NOR;  #1000;
+    command = `NOR;  #10000;
     $display("NOR \n%b\n%b\n%b\n", a, b, result);
-    command = `SHFT; #1000;
+    command = `SHFT; #10000;
     $display("SHFT\n%b\n%b\n",     a,    result);
   end
 endmodule
