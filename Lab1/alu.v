@@ -23,7 +23,7 @@ module ALU(
 );
   wire[31:0] results[0:8];
   reg clock;
-  bitwiseADD  bADD (results[`ADD ], carryout, operandA, operandB, 0);
+  bitwiseADD  bADD (results[`ADD ], overflow, operandA, operandB, 0);
   bitwiseXOR  bXOR (results[`XOR ], operandA, operandB);
   bitwiseAND  bAND (results[`AND ], operandA, operandB);
   bitwiseOR   bOR  (results[`OR  ], operandA, operandB);
@@ -63,7 +63,7 @@ module testALU();
     #1000;
     // iterate through commands with genvar?
     command = `ADD;  #10000;
-    $display("ADD \n%b\n%b\n%b\n", a, b, result);
+    $display("ADD \n%b\n%b\n%b\n%b\n", a, b, result, overflow);
     command = `XOR;  #10000;
     $display("XOR \n%b\n%b\n%b\n", a, b, result);
     command = `AND;  #10000;
