@@ -25,17 +25,15 @@ module bitwiseADD(
   FullAdder adder(outBit, carryout, aBit, bBit, carryBit);
   integer i;
   initial begin
-		
     #670;
     carryBit = carryin;
     for (i = 0; i < 32; i = i + 1) begin
       aBit = a[i];
       bBit = b[i];
-      #20;
+      #20
       out[i] = outBit;
       carryBit = carryout;
     end
-    #0;
     overflow = carryout;
   end
 endmodule
