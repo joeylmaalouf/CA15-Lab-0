@@ -24,6 +24,8 @@ module ALU(
   wire[31:0] results[0:8];
   reg clock;
   bitwiseADD  bADD (results[`ADD ], carryout, operandA, operandB, 0);
+	bitwiseSUB  bSUB (results[`SUB ], carryout, operandA, operandB, 0);
+	lessThan    bSLT (results[`SLT ], operandA, operandB);
   bitwiseXOR  bXOR (results[`XOR ], operandA, operandB);
   bitwiseAND  bAND (results[`AND ], operandA, operandB);
   bitwiseOR   bOR  (results[`OR  ], operandA, operandB);
@@ -37,9 +39,9 @@ module ALU(
     clock = 1;
     case (command)
       `ADD:  begin result = results[`ADD ]; end
-      `SUB:  begin /**/ end
+      `SUB:  begin result = results[`SUB ]; end
       `XOR:  begin result = results[`XOR ]; end
-      `SLT:  begin /**/ end
+      `SLT:  begin result = results[`SLT ]; end
       `AND:  begin result = results[`AND ]; end
       `NAND: begin result = results[`NAND]; end
       `NOR:  begin result = results[`NOR ]; end
@@ -60,20 +62,24 @@ module testALU();
   initial begin
     a = 32'b00000000000001000001000001001100;
     b = 32'b00001000101001001001000000001100;
-    #10000;
-    command = `ADD;  #1000;
+    #1000000;
+    command = `ADD;  #100000;
     $display("ADD \n%b\n%b\n%b\n", a, b, result);
-    command = `XOR;  #1000;
+		command = `SUB;  #100000;
+		$display("SUB \n%b\n%b\n%b\n", a, b, result);
+		command = `SLT;  #100000;
+		$display("SLT \n%b\n%b\n%b\n", a, b, result);
+    command = `XOR;  #100000;
     $display("XOR \n%b\n%b\n%b\n", a, b, result);
-    command = `AND;  #1000;
+    command = `AND;  #100000;
     $display("AND \n%b\n%b\n%b\n", a, b, result);
-    command = `OR;   #1000;
+    command = `OR;   #100000;
     $display("OR  \n%b\n%b\n%b\n", a, b, result);
-    command = `NAND; #1000;
+    command = `NAND; #100000;
     $display("NAND\n%b\n%b\n%b\n", a, b, result);
-    command = `NOR;  #1000;
+    command = `NOR;  #100000;
     $display("NOR \n%b\n%b\n%b\n", a, b, result);
-    command = `SHFT; #1000;
+    command = `SHFT; #100000;
     $display("SHFT\n%b\n%b\n",     a,    result);
   end
 endmodule
