@@ -1,3 +1,5 @@
+`include "logic.v"
+
 `define XOR xor #60
 `define AND and #30
 `define OR or #30
@@ -38,32 +40,6 @@ module bitwiseADD(
     overflow = carryout;
   end
 endmodule
-
-
-module bitwiseINV(
-	output reg[31:0] out,
-	input[31:0] a
-);
-	reg p;
-	wire k;
-	inverter myInverter(k, p);
-	integer i;
-	always @ (a) begin
-		#26;
-		for (i = 0; i < 32; i = i + 1) begin
-			p = a[i];
-			#20;
-			out[i] = k;
-		end
-	end
-endmodule
-
-module inverter(
-	output out,
-	input a
-);
-	`NOT(out, a);
-endmodule 
 
 module bitwiseSUB(
 	output reg[31:0] out,
