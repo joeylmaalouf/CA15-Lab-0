@@ -41,7 +41,16 @@ Our XOR is a simple 1-bit XOR that, like all of our bitwise operations, iterates
 
 
 ### Timing Analysis
-...
+Shifter: 120
+Add: 1000
+Sub: 3008
+xor: 120
+and: 60
+nand: 116
+nor: 126
+not: 56 
+or: 70
+less than: 5038
 
 
 ### Work Plan Reflection
