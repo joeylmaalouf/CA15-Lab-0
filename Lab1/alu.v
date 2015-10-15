@@ -24,13 +24,8 @@ module ALU(
   wire[31:0] results[0:8];
   reg clock;
   bitwiseADD  bADD (results[`ADD ], overflow, operandA, operandB, 0);
-<<<<<<< HEAD
-  bitwiseSUB  bSUB (results[`SUB ], overflow, operandA, operandB, 0);
-  lessThan    bSLT (results[`SLT ], operandA, operandB);
-=======
 	bitwiseSUB  bSUB (results[`SUB ], overflow, operandA, operandB, 0);
 	lessThan    bSLT (results[`SLT ], operandA, operandB);
->>>>>>> user/dbishop/allworking
   bitwiseXOR  bXOR (results[`XOR ], operandA, operandB);
   bitwiseAND  bAND (results[`AND ], operandA, operandB);
   bitwiseOR   bOR  (results[`OR  ], operandA, operandB);
@@ -67,7 +62,6 @@ module testALU();
   initial begin
     a = 32'b00000000000001000001000001001101;
     b = 32'b00001000101001001001000000001100;
-<<<<<<< HEAD
     #100000;
     command = `ADD;  #1000;
     $display("ADD \n%b\n%b\n%b\n%b\n", a, b, result, overflow);
@@ -76,20 +70,6 @@ module testALU();
     command = `SLT;  #1000;
     $display("SLT \n%b\n%b\n%b\n", a, b, result);
     command = `XOR;  #1000;
-=======
-    #1000000;
-    command = `ADD;  #100000;
-    $display("ADD \n%b\n%b\n%b\n", a, b, result);
-		a = 32'b00000000000001000001000001001100;
-    b = 32'b00001000101001001001000000001101;
-		#100000;
-		$display("ADD \n%b\n%b\n%b\n", a, b, result);
-		command = `SUB;  #100000;
-		$display("SUB \n%b\n%b\n%b\n", a, b, result);
-		command = `SLT;  #100000;
-		$display("SLT \n%b\n%b\n%b\n", a, b, result);
-    command = `XOR;  #100000;
->>>>>>> user/dbishop/allworking
     $display("XOR \n%b\n%b\n%b\n", a, b, result);
     command = `AND;  #1000;
     $display("AND \n%b\n%b\n%b\n", a, b, result);
