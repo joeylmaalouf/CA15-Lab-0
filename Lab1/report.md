@@ -60,4 +60,4 @@ Our shifter uses D-flip-flops to take each bit value in the input and, when the 
 
 
 ### Work Plan Reflection
-We took far longer than expected on each and every one of our work sections, leading us to the idea that we should allot far more time than we initially expect to. We expected the logical, mathematical, and shifting operations to take 1 hour per category, but they instead took 6, 5, and 1 respectively.
+We took far longer than expected on each and every one of our work sections, leading us to the idea that we should allot far more time than we initially expect to. We expected the logical, mathematical, and shifting operations to take 1 hour per category, but they instead took 9, 7, and 3 respectively. The insane idiosyncrasies of Verilog, as well as errors in our assumptions about the way that we would be able to manipulate the code, hampered out ability to construct the circuits that we had fully designed well within our estimated time frame.
