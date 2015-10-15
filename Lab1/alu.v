@@ -38,15 +38,15 @@ module ALU(
   always @(command or operandA or operandB) begin // re-assign when the command is changed
     clock = 1;
     case (command)
-      `ADD:  begin #1000; result = results[`ADD ]; end
-      `SUB:  begin #1000; result = results[`SUB ]; end
-      `XOR:  begin #1000; result = results[`XOR ]; end
-      `SLT:  begin #1000; result = results[`SLT ]; end
-      `AND:  begin #1000; result = results[`AND ]; end
-      `NAND: begin #1000; result = results[`NAND]; end
-      `NOR:  begin #1000; result = results[`NOR ]; end
-      `OR:   begin #1000; result = results[`OR  ]; end
-      `SHFT: begin #1000; result = results[`SHFT]; end
+      `ADD:  begin result = results[`ADD ]; end
+      `SUB:  begin result = results[`SUB ]; end
+      `XOR:  begin result = results[`XOR ]; end
+      `SLT:  begin result = results[`SLT ]; end
+      `AND:  begin result = results[`AND ]; end
+      `NAND: begin result = results[`NAND]; end
+      `NOR:  begin result = results[`NOR ]; end
+      `OR:   begin result = results[`OR  ]; end
+      `SHFT: begin result = results[`SHFT]; end
     endcase
     #2000;
     clock = 0;
@@ -63,23 +63,23 @@ module testALU();
     a = 32'b00000000000001000001000001001101;
     b = 32'b00001000101001001001000000001100;
     #100000;
-    command = `ADD;  #1000;
+    command = `ADD;  #100000;
     $display("ADD \n%b\n%b\n%b\n%b\n", a, b, result, overflow);
-    command = `SUB;  #1000;
+    command = `SUB;  #100000;
     $display("SUB \n%b\n%b\n%b\n%b\n", a, b, result, overflow);
-    command = `SLT;  #1000;
+    command = `SLT;  #100000;
     $display("SLT \n%b\n%b\n%b\n", a, b, result);
-    command = `XOR;  #1000;
+    command = `XOR;  #100000;
     $display("XOR \n%b\n%b\n%b\n", a, b, result);
-    command = `AND;  #1000;
+    command = `AND;  #100000;
     $display("AND \n%b\n%b\n%b\n", a, b, result);
-    command = `OR;   #1000;
+    command = `OR;   #100000;
     $display("OR  \n%b\n%b\n%b\n", a, b, result);
-    command = `NAND; #1000;
+    command = `NAND; #100000;
     $display("NAND\n%b\n%b\n%b\n", a, b, result);
-    command = `NOR;  #1000;
+    command = `NOR;  #100000;
     $display("NOR \n%b\n%b\n%b\n", a, b, result);
-    command = `SHFT; #1000;
+    command = `SHFT; #100000;
     $display("SHFT\n%b\n%b\n",     a,    result);
   end
 endmodule
