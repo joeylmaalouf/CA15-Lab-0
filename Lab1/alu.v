@@ -38,15 +38,15 @@ module ALU(
   always @(command or operandA or operandB) begin // re-assign when the command is changed
     clock = 1;
     case (command)
-      `ADD:  begin result = results[`ADD ]; end
-      `SUB:  begin result = results[`SUB ]; end
-      `XOR:  begin result = results[`XOR ]; end
-      `SLT:  begin result = results[`SLT ]; end
-      `AND:  begin result = results[`AND ]; end
-      `NAND: begin result = results[`NAND]; end
-      `NOR:  begin result = results[`NOR ]; end
-      `OR:   begin result = results[`OR  ]; end
-      `SHFT: begin result = results[`SHFT]; end
+      `ADD:  begin #1000; result = results[`ADD ]; end
+      `SUB:  begin #1000; result = results[`SUB ]; end
+      `XOR:  begin #1000; result = results[`XOR ]; end
+      `SLT:  begin #1000; result = results[`SLT ]; end
+      `AND:  begin #1000; result = results[`AND ]; end
+      `NAND: begin #1000; result = results[`NAND]; end
+      `NOR:  begin #1000; result = results[`NOR ]; end
+      `OR:   begin #1000; result = results[`OR  ]; end
+      `SHFT: begin #1000; result = results[`SHFT]; end
     endcase
     #2000;
     clock = 0;
@@ -60,10 +60,14 @@ module testALU();
   wire carryout, zero, overflow;
   ALU alu(result, carryout, zero, overflow, a, b, command);
   initial begin
-    a = 32'b00000000000001000001000001001101;
+    a = 32'b00000000000001000001000001001100;
     b = 32'b00001000101001001001000000001100;
     #1000000;
     command = `ADD;  #100000;
+    $display("ADD \n%b\n%b\n%b\n%b\n", a, b, result, overflow);
+    a = 32'b00000101000001000001000001001101;
+    b = 32'b00001000101001001001000000001100;
+    #100000;
     $display("ADD \n%b\n%b\n%b\n%b\n", a, b, result, overflow);
     command = `SUB;  #100000;
     $display("SUB \n%b\n%b\n%b\n%b\n", a, b, result, overflow);

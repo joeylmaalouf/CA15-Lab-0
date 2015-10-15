@@ -82,8 +82,9 @@ module bitwiseSUB(
 	bitwiseINV asdawsd(neg_b, b);
 	bitwiseADD adsadasda(output_temp, overflow_placeholder, neg_b, 1, 1);
 	always @ (a or b or carryin) begin
-		#1311;
-		#641;
+		//#1311;
+		//#641;
+		#10000;
 		overflow = overflow_placeholder;
 		out = output_temp;
 	end
@@ -100,7 +101,8 @@ module lessThan(
 	`AND(isLessThan, output_temp[31], 1);
 	always @ (a or b) begin
 		out = 32'b00000000000000000000000000000000;
-		#2000;
+		//#2000;
+		#11000;
 		out[0] = isLessThan;
 	end
 endmodule 
