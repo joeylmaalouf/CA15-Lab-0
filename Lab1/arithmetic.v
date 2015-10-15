@@ -1,7 +1,7 @@
-`define XOR xor
-`define AND and
-`define OR or
-`define NOT not
+`define XOR xor #60
+`define AND and #30
+`define OR or #30
+`define NOT not #10
 
 module FullAdder(out, carryout, a, b, carryin);
   output out, carryout;
@@ -24,13 +24,13 @@ module bitwiseADD(
   reg aBit, bBit, carryBit;
   FullAdder adder(outBit, carryout, aBit, bBit, carryBit);
   integer i;
-  initial begin
+  always @ (a or b or carryin) begin
     #670;
     carryBit = carryin;
     for (i = 0; i < 32; i = i + 1) begin
       aBit = a[i];
       bBit = b[i];
-      #20
+      #120;
       out[i] = outBit;
       carryBit = carryout;
     end
@@ -38,31 +38,6 @@ module bitwiseADD(
   end
 endmodule
 
-module bitwiseADD2(
-  output reg[31:0] out,
-  output reg overflow,
-  input[31:0] a, b,
-  input carryin
-);
-  wire carryout, outBit;
-  reg aBit, bBit, carryBit;
-  FullAdder adder(outBit, carryout, aBit, bBit, carryBit);
-  integer i;
-  initial begin
-		
-    #1311;
-    carryBit = carryin;
-    for (i = 0; i < 32; i = i + 1) begin
-      aBit = a[i];
-      bBit = b[i];
-      #20;
-      out[i] = outBit;
-      carryBit = carryout;
-    end
-    #0;
-    overflow = carryout;
-  end
-endmodule
 
 module bitwiseINV(
 	output reg[31:0] out,
@@ -72,8 +47,8 @@ module bitwiseINV(
 	wire k;
 	inverter myInverter(k, p);
 	integer i;
-	initial begin
-		#26; //25 WONT WORK NUH UH NO SIR
+	always @ (a) begin
+		#26;
 		for (i = 0; i < 32; i = i + 1) begin
 			p = a[i];
 			#20;
@@ -99,14 +74,13 @@ module bitwiseSUB(
 	wire[31:0] neg_b;
 	wire[31:0] out_placeholder;
 	wire[31:0] output_temp;
-	wire[31:0] another_temp;
-	reg[31:0] temp;
-	wire trash;
+	//wire[31:0] another_temp;
+	//reg[31:0] temp;
+	//wire trash;
 	wire overflow_placeholder;
 	bitwiseINV asdawsd(neg_b, b);
-	bitwiseADD adsadasda(out_placeholder, trash, neg_b, 1, 0);
-	bitwiseADD2 asdwds(output_temp, overflow_placeholder, a, out_placeholder, 0);
-	initial begin
+	bitwiseADD adsadasda(output_temp, overflow_placeholder, neg_b, 1, 1);
+	always @ (a or b or carryin) begin
 		#1311;
 		#641;
 		overflow = overflow_placeholder;
@@ -123,9 +97,9 @@ module lessThan(
 	wire[31:0] output_temp;
 	bitwiseSUB asdasd(output_temp, overflow, a, b, 0);
 	`AND(isLessThan, output_temp[31], 1);
-	initial begin
+	always @ (a or b) begin
 		out = 32'b00000000000000000000000000000000;
-		#1953;
+		#2000;
 		out[0] = isLessThan;
 	end
 endmodule 
