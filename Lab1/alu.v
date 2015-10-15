@@ -62,7 +62,7 @@ module testALU();
   initial begin
     a = 32'b00000000000001000001000001001101;
     b = 32'b00001000101001001001000000001100;
-    #100000;
+    #1000000;
     command = `ADD;  #100000;
     $display("ADD \n%b\n%b\n%b\n%b\n", a, b, result, overflow);
     command = `SUB;  #100000;

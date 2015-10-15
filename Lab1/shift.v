@@ -1,6 +1,6 @@
 //This is a left shifter. It uses D flip flops to capture data and update it with the clock cycle. The 
 //D flip flops use only NAND gates. 
-`define NAND nand #20
+`define NAND nand #30
 
 module bitwiseSHFT(Q, D, clock);
   output[31:0] Q;

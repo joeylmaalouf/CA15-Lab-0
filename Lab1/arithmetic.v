@@ -34,6 +34,7 @@ module bitwiseADD(
       out[i] = outBit;
       carryBit = carryout;
     end
+    #0;
     overflow = carryout;
   end
 endmodule
