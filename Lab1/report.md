@@ -47,15 +47,16 @@ Our shifter uses D-flip-flops to take each bit value in the input and, when the 
 
 
 ### Timing Analysis
-* ADD:
-* SUB:
-* XOR:
-* SLT:
-* AND:
-* NAND:
-* NOR:
-* OR:
-* SHFT:
+* ADD: 4920
+* SUB: 4930
+* XOR: 60
+* SLT: 4960
+* AND: 30
+* NAND: 40
+* NOR: 40
+* OR: 30
+* SHFT: 120
+* NOT: 10
 
 
 ### Work Plan Reflection
