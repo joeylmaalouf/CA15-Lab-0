@@ -125,7 +125,7 @@ B:        01111111111111111111111111111111
 Out:      00000000000000000000000000000001
 Expected: 00000000000000000000000000000001
 ```
-With the output having a one meaning that A is less than B and with the output having only zeroes meaning that A is not less than B, we have a functional Set Less Than. These test cases revealed substantial issues with this module. It was unable to handle two's compliment, and thereby negative numbers. We used a variety of conditionals to solve this. We had more tests to prove absolutely that this would work. The first two tested basic functionality, the third tested two identical numbers, the third tested the lowest negative versus zero, and the last tested the lowest negative versus the highest positive. All test cases performed as expected.
+These test cases revealed substantial issues with this module. It was unable to handle two's complement negative numbers until we used a variety of "conditionals" (and/or gates) to solve this. We had more tests to prove absolutely that this would work. The first two tested basic functionality, the third tested two identical numbers, the third tested the lowest negative versus zero, and the last tested the lowest negative versus the highest positive. All test cases performed as expected.
 
 ```
 XOR 
