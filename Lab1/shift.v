@@ -1,12 +1,12 @@
-//This is a left shifter. It uses D flip flops to capture data and update it with the clock cycle. The 
-//D flip flops use only NAND gates. 
+// This is a left shifter. It uses D flip flops to capture data and update it with the clock cycle. The 
+// D flip flops use only NAND gates. 
 `define NAND nand #30
 
 module bitwiseSHFT(Q, D, clock);
   output[31:0] Q;
   input[31:0] D;
   input clock;
-  Dflipflop dff00(Q[ 1], D[ 0], clock); //Shifts everything to the left by moving the output to the new location
+  Dflipflop dff00(Q[ 1], D[ 0], clock); // Shifts everything to the left by moving the output to the new location
   Dflipflop dff01(Q[ 2], D[ 1], clock);
   Dflipflop dff02(Q[ 3], D[ 2], clock);
   Dflipflop dff03(Q[ 4], D[ 3], clock);
@@ -38,7 +38,7 @@ module bitwiseSHFT(Q, D, clock);
   Dflipflop dff29(Q[30], D[29], clock);
   Dflipflop dff30(Q[31], D[30], clock);
   Dflipflop dff31(Q[ 0], D[31], clock);
-  endmodule
+endmodule
 
 module Dflipflop(Q1, data, clock);
   output Q1;
@@ -49,5 +49,5 @@ module Dflipflop(Q1, data, clock);
   `NAND nand3(dflip3, clock, dflip4);
   `NAND nand4(dflip4, dflip1, dflip3);
   `NAND nand5(Q1, dflip6, dflip3);
-  `NAND nand6(dflip6, dflip2, Q1); //total delay of 120
+  `NAND nand6(dflip6, dflip2, Q1); // total delay of 120
 endmodule
