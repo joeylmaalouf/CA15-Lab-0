@@ -59,28 +59,65 @@ module bitwiseADD(
 endmodule
 
 module bitwiseSUB(
-	output[31:0] out,
-	output overflow,
-	input[31:0] a, 
-	input[31:0] b,
-	input carryin
+  output[31:0] out,
+  output overflow,
+  input[31:0] a, 
+  input[31:0] b,
+  input carryin
 );
-	wire[31:0] neg_b;
-	bitwiseINV myInverter(neg_b, b);
-	bitwiseADD myAdder(out, overflow, neg_b, a, 1);
+  wire[31:0] neg_b;
+  bitwiseINV myInverter(neg_b, b);
+  bitwiseADD myAdder(out, overflow, a, neg_b, 1);
 endmodule  
 
 module lessThan(
-	output reg[31:0] out,
-	input[31:0] a,
-	input[31:0] b
+  output[31:0] out,
+  input[31:0] a,
+  input[31:0] b
 );
-	wire isLessThan;
-	wire[31:0] output_temp;
-	bitwiseSUB mySubber(output_temp, overflow, a, b, 0);
-	`AND(isLessThan, output_temp[31], 1);
-	always @ (a or b) begin
-		out = 32'b00000000000000000000000000000000;
-		out[0] = isLessThan;
-	end
+  wire isNotGreaterThan;
+  wire condition0, condition1, condition2;
+  wire disqualifier0;
+  wire nota, notb;
+  wire[31:0] output_temp;
+  bitwiseSUB mySubber(output_temp, overflow, a, b, 0);
+  `AND(condition0, output_temp[31], 1);
+  `NOT(nota, a[31]);
+  `AND(disqualifier0, nota, b[31]);
+  `NOT(isNotGreaterThan, disqualifier0);
+  `NOT(notb, b[31]);
+  `AND(condition1, a[31], notb);
+  `OR(condition2, condition0, condition1);
+  `AND(out[0], isNotGreaterThan, condition2);
+  `AND(out[1], 0, 0);
+  `AND(out[2], 0, 0);
+  `AND(out[3], 0, 0);
+  `AND(out[4], 0, 0);
+  `AND(out[5], 0, 0);
+  `AND(out[6], 0, 0);
+  `AND(out[7], 0, 0);
+  `AND(out[8], 0, 0);
+  `AND(out[9], 0, 0);
+  `AND(out[10], 0, 0);
+  `AND(out[11], 0, 0);
+  `AND(out[12], 0, 0);
+  `AND(out[13], 0, 0);
+  `AND(out[14], 0, 0);
+  `AND(out[15], 0, 0);
+  `AND(out[16], 0, 0);
+  `AND(out[17], 0, 0);
+  `AND(out[18], 0, 0);
+  `AND(out[19], 0, 0);
+  `AND(out[20], 0, 0);
+  `AND(out[21], 0, 0);
+  `AND(out[22], 0, 0);
+  `AND(out[23], 0, 0);
+  `AND(out[24], 0, 0);
+  `AND(out[25], 0, 0);
+  `AND(out[26], 0, 0);
+  `AND(out[27], 0, 0);
+  `AND(out[28], 0, 0);
+  `AND(out[29], 0, 0);
+  `AND(out[30], 0, 0);
+  `AND(out[31], 0, 0);
 endmodule 

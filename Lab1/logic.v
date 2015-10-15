@@ -84,7 +84,7 @@ module bitwiseXOR(
   input[31:0] a,
   input[31:0] b
 );
-	`XOR(out[0], a[0], b[0]);
+  `XOR(out[0], a[0], b[0]);
   `XOR(out[1], a[1], b[1]);
   `XOR(out[2], a[2], b[2]);
   `XOR(out[3], a[3], b[3]);
