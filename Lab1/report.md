@@ -70,11 +70,10 @@ A:          11000101000001000001000001001101
 B:          10001000101001001001000000001100
 Out:      1 01001101101010001010000001011001
 Expected: 1 01001101101010001010000001011001
-
+```
 This test case helped us catch that our overflow wasn't outputting properly in certain cases, which allowed us to go back and fix it. It tested the various cases in which the adder could be challenged, ranging from no overflow to having overflow.
 
-
-
+```
 SUB 
 A:          00000101000001000001000001001101
 B:          00001000101001001001000000001100
@@ -92,10 +91,10 @@ A:          01000100000101000001001001001001
 B:          10101000001001000001000010001110
 Out:      1 10011011111100000000000110111011
 Expected: 1 10011011111100000000000110111011
-
+```
 This test case also helped us catch overflow, however most of those problems were solved in the adder. It tested the various difficult cases a subtractor could be put under, and performed as expected. It tested basic function in the first and second and the ability to handle overflow in the third.
 
-
+```
 SLT 
 A:        01000101100101000001001001001001
 B:        10101001001001000001000010001110
@@ -125,13 +124,10 @@ A:        11111111111111111111111111111111
 B:        01111111111111111111111111111111
 Out:      00000000000000000000000000000001
 Expected: 00000000000000000000000000000001
-
+```
 With the output having a one meaning that A is less than B and with the output having only zeroes meaning that A is not less than B, we have a functional Set Less Than. These test cases revealed substantial issues with this module. It was unable to handle two's compliment, and thereby negative numbers. We used a variety of conditionals to solve this. We had more tests to prove absolutely that this would work. The first two tested basic functionality, the third tested two identical numbers, the third tested the lowest negative versus zero, and the last tested the lowest negative versus the highest positive. All test cases performed as expected.
 
-
-
-
-
+```
 XOR 
 A:        11111111111111111111111111111111
 B:        01111111111111111111111111111111
@@ -143,10 +139,10 @@ A:        11111110111111011111110011110111
 B:        01110111111011111110111111100111
 Out:      10001001000100100001001100010000
 Expected: 10001001000100100001001100010000
-
+```
 This test branch illuminated no major problems in this module. As it was relatively simple, we believed we could test full functionality with only two cases. The first case tested its ability to handle one difference while the second tested its ability to handle very different inputs. Both performed as expected.
 
-
+```
 AND 
 A:        10011110111111011101110011110111
 B:        01110111111011001110111000100111
@@ -158,12 +154,10 @@ A:        10011000110011011101100011000111
 B:        00010011000011001100011000100111
 Out:      00010000000011001100000000000111
 Expected: 00010000000011001100000000000111
-
-
+```
 This test branch illuminated no major problems in this module. As it was relatively simple, we believed we could test full functionality with only two cases. The both cases tested the module's ability to handle very different inputs. Both performed as expected.
 
-
-
+```
 OR 
 A:        10011010110011011101101011000111
 B:        01110011011011101100011001100111
@@ -175,12 +169,10 @@ A:        00011010010001011001100000000100
 B:        11000011010000101100011001100011
 Out:      11011011010001111101111001100111
 Expected: 11011011010001111101111001100111
-
-
+```
 This test branch illuminated no major problems in this module. As it was relatively simple, we believed we could test full functionality with only two cases. The both cases tested the module's ability to handle very different inputs. Both performed as expected.
 
-
-
+```
 NAND 
 A:        00011010011001011001101001001101
 B:        11010011010100101100011001100010
@@ -192,11 +184,10 @@ A:        00011010011001010001001001001101
 B:        00010010010100100100010001000010
 Out:      11101101101111111111111110111111
 Expected: 11101101101111111111111110111111
-
+```
 This test branch illuminated no major problems in this module. As it was relatively simple, we believed we could test full functionality with only two cases. The both cases tested the module's ability to handle very different inputs. Both performed as expected.
 
-
-
+```
 NOR 
 A:        11011010011001010001001001001101
 B:        10010010010100100100010001000010
@@ -208,12 +199,10 @@ A:        11011010011001010111001101001101
 B:        01010011110100100100110011001011
 Out:      00100100000010001000000000110000
 Expected: 00100100000010001000000000110000
-
-
+```
 This test branch illuminated no major problems in this module. As it was relatively simple, we believed we could test full functionality with only two cases. The both cases tested the module's ability to handle very different inputs. Both performed as expected.
 
-
-
+```
 SHFT 
 A:        11011010011001010111001101001101
 Out:      10110100110010101110011010011011
@@ -223,9 +212,8 @@ SHFT
 A:        01111001001001100100000011100001
 Out:      11110010010011001000000111000010
 Expected: 11110010010011001000000111000010
-
-
-
+```
+This test branch was originally one test case, and all it showed at that point was that the shifting worked. However, once we added a second test case, we found that the updated value wasn't propogating through. After a lot of tracing and debugging, we realized that our D-flip-flip updated on the falling edge of the clock, and that our ALU expected it to update on the rising edge. Fixing that issue made the shift tests work perfectly, regardless of how many there were.
 
 
 ### Timing Analysis
