@@ -27,9 +27,18 @@ module testConditioner();
     // Synchronize, Clean, Preprocess (edge finding)
     // Synchronize:
     // Give two inputs out of sync and see if it reads one before the other off clock cycle
-    always @ conditioned begin
+    always @(conditioned) begin
 	if clk != 1
 	$display ("Conditioned not synchronized with clock")
-    
+	end
+    end
 
+    // Input Stabilized:
+    always @(pin) begin
+      #100
+	if (pin == 1)
+          $display ("Debouncing Input Signal Ineffective")
+      end
+    end
+	
 endmodule
