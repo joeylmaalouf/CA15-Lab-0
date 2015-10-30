@@ -40,5 +40,17 @@ module testConditioner();
           $display ("Debouncing Input Signal Ineffective")
       end
     end
+    //Clock Edge:
+    always @(rising) begin
+	if conditioned != 1
+	  $display ("Rising edge failed to set conditioned to 1")
+	end
+    end
+    always @(falling) begin
+	if conditioned != 0
+	  $display ("Falling edge failed to set conditioned to 0")
+	end
+    end
+    
 	
 endmodule
