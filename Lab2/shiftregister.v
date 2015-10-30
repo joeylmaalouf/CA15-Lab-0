@@ -21,14 +21,16 @@ output              serialDataOut       // Positive edge synchronized
     reg [width-1:0]      shiftregistermem;
     always @(posedge clk) begin
     	always @(posedge peripheralClkEdge) begin
-				parallelDataOut << 1;
+				shiftregistermem << 1;
 				if (parallelLoad == 1) begin
-					parallelDataOut = parallelDataIn;
+					shiftregistermem = parallelDataIn;
 				end
 				else begin
-					parallelDataOut[0] = serialDataIn;
+					shiftregistermem[0] = serialDataIn;
 				end
-			serialDataOut = parallelDataOut[width-1];
-			end
+				
+			serialDataOut = shiftregistermem[width-1];
+			parallelDataOut = shiftregistermem;
+		end
     end
 endmodule
