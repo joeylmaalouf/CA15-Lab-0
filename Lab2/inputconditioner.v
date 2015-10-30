@@ -4,7 +4,6 @@
 //    2) Debounces input
 //    3) Creates pulses at edge transitions
 //------------------------------------------------------------------------
-
 module inputconditioner
 (
   input clk,               // Clock domain to synchronize input to
@@ -20,10 +19,10 @@ module inputconditioner
   reg synchronizer1 = 0;
 
   always @(posedge clk) begin
-    if(conditioned == synchronizer1) begin
+    if (conditioned == synchronizer1) begin
       counter <= 0;
     end
-    else if( counter == waittime) begin
+    else if (counter == waittime) begin
       counter <= 0;
       conditioned <= synchronizer1;
       if (synchronizer1 != conditioned) begin
