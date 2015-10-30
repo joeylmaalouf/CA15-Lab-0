@@ -25,5 +25,11 @@ module testConditioner();
     // Your Test Code
     // Be sure to test each of the three conditioner functions:
     // Synchronize, Clean, Preprocess (edge finding)
+    // Synchronize:
+    // Give two inputs out of sync and see if it reads one before the other off clock cycle
+    always @ conditioned begin
+	if clk != 1
+	$display ("Conditioned not synchronized with clock")
     
+
 endmodule
