@@ -28,7 +28,7 @@ module testConditioner();
     // Synchronize:
     // Give two inputs out of sync and see if it reads one before the other off clock cycle
     always @(conditioned) begin
-	if clk != 1
+	if clk != 1 begin
 	$display ("Conditioned not synchronized with clock")
 	end
     end
@@ -36,18 +36,18 @@ module testConditioner();
     // Input Stabilized:
     always @(pin) begin
       #100
-	if (pin == 1)
+	if (pin == 1) begin
           $display ("Debouncing Input Signal Ineffective")
       end
     end
     //Clock Edge:
     always @(rising) begin
-	if conditioned != 1
+	if conditioned != 1 begin
 	  $display ("Rising edge failed to set conditioned to 1")
 	end
     end
     always @(falling) begin
-	if conditioned != 0
+	if conditioned != 0 begin
 	  $display ("Falling edge failed to set conditioned to 0")
 	end
     end
