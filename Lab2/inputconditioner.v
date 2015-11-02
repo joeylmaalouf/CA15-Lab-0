@@ -38,7 +38,7 @@ module inputconditioner
         negativeedge <= 0;
       end
     end
-    else 
+    else begin
       counter <= counter+1;
     end
     synchronizer0 <= noisysignal;
