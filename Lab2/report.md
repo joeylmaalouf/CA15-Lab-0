@@ -9,6 +9,7 @@ If the system clock is at 50MHz and the waittime is 10, then the longest glitch 
 
 ###Shift Register
 ####Test Bench Strategy
+<TODO>
 
 ###Midpoint Deliverables
 ####Test Engineer Procedure
