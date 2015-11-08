@@ -34,7 +34,6 @@ always @(posedge sclk) begin
   else begin
   	if (state == state_GETTING) begin
   		if (count == 8) begin
-  			count = 0;
   			state = state_GOT;
   		end
   		else begin
@@ -43,6 +42,7 @@ always @(posedge sclk) begin
   	end
   	else if (state == state_GOT) begin
   		assign addr_we = 1;
+  		count = 0;
   		if (shiftRegOutP0 == 0) begin
   			state = state_READ_1;
   		end
@@ -67,13 +67,20 @@ always @(posedge sclk) begin
   		end
   	end
   	else if (state == state_WRITE_1) begin
-  		state = state_WRITE_1;
+  	    if (count == 8) begin
+  	    	state = state_WRITE_2;
+  	    end
+  		else begin
+  			count = count + 1;
+  		end
   	end
   	else if (state == state_WRITE_2) begin
   		assign dm_we = 1;
   		state = state_DONE;
   	end
-
+  	else begin
+  		counter = 0;
+  	end
   end
 
 end
