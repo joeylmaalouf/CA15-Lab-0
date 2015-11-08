@@ -6,7 +6,6 @@ sim:/testConditioner/pin \
 sim:/testConditioner/conditioned \
 sim:/testConditioner/rising \
 sim:/testConditioner/falling \
-sim:/testConditioner/RegWrite \
 sim:/testConditioner/clk
 run -all
 
