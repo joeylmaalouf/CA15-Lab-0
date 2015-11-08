@@ -1,8 +1,8 @@
 module dflipflop
 (
-  input d,     // input
   input clk,   // clock
   input en,    // enable
+  input d,     // input
   output reg q // output
 );
   always @(posedge clk) begin
