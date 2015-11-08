@@ -21,6 +21,8 @@ module inputconditioner
   always @(posedge clk) begin
     if (conditioned == synchronizer1) begin
       counter <= 0;
+      positiveedge <= 0;
+      negativeedge <= 0;
     end
     else if (counter == waittime) begin
       counter <= 0;
@@ -32,10 +34,6 @@ module inputconditioner
         else if (synchronizer1 == 0) begin
           negativeedge <= 1;
         end
-      end
-      else begin
-        positiveedge <= 0;
-        negativeedge <= 0;
       end
     end
     else begin
