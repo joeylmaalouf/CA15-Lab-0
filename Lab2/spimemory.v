@@ -32,7 +32,7 @@ module spiMemory
   dflipflop dff0(clk, sclk_neg, sr_ser_out, dff_out);
   dflipflop dff1(clk, addr_we, sr_par_out, address);
   datamemory dm0(clk, dmem_out, address, dm_we, sr_par_out);
-  if (miso_buf) begin
+  if (miso_buf or fault_pin) begin
   	miso_pin <= dff_out;
   end
   else begin
