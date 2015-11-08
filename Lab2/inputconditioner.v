@@ -29,7 +29,7 @@ module inputconditioner
         if (synchronizer1 == 1) begin
           positiveedge <= 1;
         end
-        else begin
+        else if (synchronizer1 == 0) begin
           negativeedge <= 1;
         end
       end
