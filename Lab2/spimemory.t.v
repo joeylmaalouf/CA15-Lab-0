@@ -32,14 +32,21 @@ module fault_injection_test();
   initial begin
 		fault_pin = 1;
 		cs_pin = 0;
-		#20;
+		#60;
 
 		sclk_pin = 1;
 		mosi_pin = 1;
-		#20;
-
+		#60;
 		sclk_pin = 0;
-		#20;
-		
+    #60;
+
+    sclk_pin = 1; #60; sclk_pin = 0; #60;
+    sclk_pin = 1; #60; sclk_pin = 0; #60;
+    sclk_pin = 1; #60; sclk_pin = 0; #60;
+    sclk_pin = 1; #60; sclk_pin = 0; #60;
+    sclk_pin = 1; #60; sclk_pin = 0; #60;
+    sclk_pin = 1; #60; sclk_pin = 0; #60;
+    sclk_pin = 1; #60; sclk_pin = 0; #60;
+    sclk_pin = 1; #60; sclk_pin = 0;
   end
 endmodule
