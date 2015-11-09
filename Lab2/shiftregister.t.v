@@ -34,6 +34,7 @@ module testshiftregister();
 
     always @(posedge peripheralClkEdge) begin
 //testing the broken case
+	#20
 	if (parallelDataOut == parallelDataIn) begin
 	  $display("Parallel Load Flag Ignored; Value Propagated When Flag Was False");
 	end
@@ -41,24 +42,27 @@ module testshiftregister();
 	  $display("Failed To Set Serial Data To Serial Out Effectively; Though Parallel Flag Was False, Serial Didn't Fire")	;
 	end
 // testing the normal case
-	#1
 	parallelLoad = 1;
+	#20
 	if (parallelDataOut != parallelDataIn) begin
 	  $display("Normal Parallel Load Case Failed; Flag Failed To Propogate When Flag Was True");
 	end
 	if (serialDataOut == serialDataIn) begin
 	  $display("Serial Data Propagated Incorrectly; Parallel Flag Failed To Prevent Serial Write");
 	end
-        #1
+        #20
 	peripheralClkEdge = 0;
     end
     always @(negedge peripheralClkEdge) begin
+	#200
 	parallelDataIn = 8'b11001001;
-	serialDataIn = 0;
+	serialDataIn = 1;
+	#20
 	if (parallelDataIn == parallelDataOut) begin
 	  $display("Shift Register Working Off Peripheral Clock Edge (Parallel)");
 	end
 	parallelLoad = 0;
+	#20
 	if (serialDataIn == serialDataOut) begin
 	  $display("Shift Register Working Off Peripheral Clock Edge (Serial)");
 	end
