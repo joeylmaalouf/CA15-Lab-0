@@ -1,13 +1,13 @@
-module FSM
+module finitestatemachine
 (
   input sclk,
   input cs,
   input shiftRegOutP0,
-  output sr_we,
-  output addr_we,
-  output dm_we,
-  output miso_enable,
-  output state
+  output reg sr_we,
+  output reg addr_we,
+  output reg dm_we,
+  output reg miso_enable,
+  output reg state
 );
   parameter state_GETTING = 0;
   parameter state_GOT     = 1;
@@ -18,7 +18,6 @@ module FSM
   parameter state_WRITE_2 = 6;
   parameter state_DONE    = 7;
   reg count;
-  reg state;
 
   initial begin
     count = 0;
@@ -59,7 +58,7 @@ module FSM
       end
       else if (state == state_READ_3) begin
         assign miso_enable = 1;
-        if (counter == 8) begin
+        if (count == 8) begin
           state = state_DONE;
         end
         else begin
@@ -79,7 +78,7 @@ module FSM
         state = state_DONE;
       end
       else begin
-        counter = 0;
+        count = 0;
       end
     end
   end
