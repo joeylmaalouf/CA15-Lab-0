@@ -59,7 +59,7 @@ The fault we have injected is that our Finite State Machine's MISO buffer enable
 
 A test pattern that will detect this fault is to set the MOSI pin high and cycle the signal clock once. If the MISO pin is undriven, then the error is not present, if the MISO pin is driven to the value of the MOSI pin, the error is present.
 ####Test Strategy
-In order to test the functionality of the SPI Memory, we threw a variety of potentially failable requests at it. We sent it data to write while it was flagged to read and got an appropriate undriven response as the output. Inversely, we sent it data to read when it was flagged to write and the output was the default data value instead of the value we sent, as expected. 
+In order to test the functionality of the SPI Memory, we threw a variety of potentially failable requests at it. We sent it data to write while it was flagged to read and got an appropriate undriven response as the output. Inversely, we sent it data to read when it was flagged to write and the output was the default data value instead of the value we sent, as expected. We checked to see if the SPI Memory was only transferring data on the positive clock edge by giving it data on the falling edge and seeing if it propagated, which it did not, as expected. We set the Miso Buffer to be always false and checked for an input other than Z, which was not the case.
 
 ###Work Plan Reflection
 | Chunk                            | ETC      | ATC      |
