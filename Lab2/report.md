@@ -60,3 +60,18 @@ The fault we have injected is that our Finite State Machine's MISO buffer enable
 A test pattern that will detect this fault is to set the MOSI pin high and cycle the signal clock once. If the MISO pin is undriven, then the error is not present, if the MISO pin is driven to the value of the MOSI pin, the error is present.
 ####Test Strategy
 In order to test the functionality of the SPI Memory, we threw a variety of potentially failable requests at it. We sent it data to write while it was flagged to read and got an appropriate undriven response as the output. Inversely, we sent it data to read when it was flagged to write and the output was the default data value instead of the value we sent, as expected. 
+
+###Work Plan Reflection
+| Chunk                            | ETC      | ATC      |
+|----------------------------------|----------|----------|
+| Input Conditioner                | 8 Hours  | 6 Hours  |
+| Input Conditioner Test Bench     | 1 Hour   | 2 Hours  |
+| Shift Register                   | 12 Hours | 1 Hour   |
+| Shift Register Test Bench        | 1 Hour   | 2 Hours  |
+| Midpoint Deliverable Composition | 4 Hours  | 2 Hours  |
+| SPI Memory                       | 12 Hours | 2 Hours  |
+| FSM                              | 4 Hours  | 4 Hours  |
+| SPI Testing                      | 2 Hours  | 1 Hour   |
+| Fault Injection                  | 4 Hours  | 2 Hours  |
+| Deliverable Creation             | 4 Hours  | 4 Hours  |
+Our actual time of completion was less than our estimated time of completion for every task, but this is likely due to our gross over-estimation when creating our initial work plan.
