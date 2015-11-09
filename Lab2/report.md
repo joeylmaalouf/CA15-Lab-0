@@ -55,5 +55,5 @@ To test the parralel input ability of the shift register, simply press button 0.
 ###SPI Memory
 The fault we have injected is that our Finite State Machine's MISO buffer enable signal is stuck high. This means that output will always be passed to the "outside" even when we don't want it to.
 ####Schematic
-![SPI Fault](spimemory_broken.png)
+![SPI Fault](spimemory_broken.png)  
 Symptoms of this error are test cases failing due to the output being driven when it should be undriven due to the tri-state buffer being stuck on.
