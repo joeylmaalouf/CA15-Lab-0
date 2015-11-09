@@ -5,7 +5,7 @@
 ![Input Conditioner Circuit Diagram](input-conditioner.png)
 
 ####Glitch Suppression
-If the system clock is at 50MHz and the waittime is 10, then the longest glitch that will be suppressed is 9/50,000,000'th of a second long because on the 10th clock cycle the glitch will be treated as a proper signal.
+If the system clock is at 50MHz and the waittime is 3, then the longest glitch that will be suppressed is just under 3 clock cycles long (<59ns).
 
 ###Shift Register
 ####Test Bench Strategy
@@ -54,5 +54,7 @@ To test the parralel input ability of the shift register, simply press button 0.
 
 ###SPI Memory
 The fault we have injected is that our Finite State Machine's MISO buffer enable signal is stuck high. This means that output will always be passed to the "outside" even when we don't want it to.
+####Schematic
+![SPI Fault](spimemory_broken.png)
 
 Symptoms of this error are test cases failing due to the output being driven when it should be undriven due to the tri-state buffer being stuck on.

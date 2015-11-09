@@ -1,4 +1,4 @@
-vlog -reportprogress 300 -work work inputconditioner2.t.v
+vlog -reportprogress 300 -work work inputconditioner.t.v
 vsim -voptargs="+acc" testConditioner
 
 add wave -position insertpoint  \
