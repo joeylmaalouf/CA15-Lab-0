@@ -7,7 +7,7 @@ module finitestatemachine
   output reg addr_we,
   output reg dm_we,
   output reg miso_enable,
-  output reg[2:0] state
+  output reg state
 );
   parameter state_GETTING = 0;
   parameter state_GOT     = 1;
@@ -17,15 +17,15 @@ module finitestatemachine
   parameter state_WRITE_1 = 5;
   parameter state_WRITE_2 = 6;
   parameter state_DONE    = 7;
-  reg[3:0] count;
+  reg count;
 
   initial begin
     count = 0;
     state = 0;
   end
 
-  always @(sclk) begin
-    if (cs) begin
+  always @(posedge sclk) begin
+    if (cs == 1) begin
       state = state_GETTING;
       count = 0;
     end
