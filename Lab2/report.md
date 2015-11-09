@@ -9,7 +9,7 @@ If the system clock is at 50MHz and the waittime is 3, then the longest glitch t
 
 ###Shift Register
 ####Test Bench Strategy
-In order to test the Shift Register sufficiently, we decided to systematically test the various possible states of the register. The test bench is set up to purposefully provide inputs targetting both states at the same time, neither, and one over the other in order to prove there is no overlap or confusion. In order to exhaustively prove the function, we had the peripheral clock edge be set to zero, and tested to make sure nothing changed when this was the case. All tests performed as expected and responded appropriately to broken Shift Registers.
+<TODO>
 
 ###Midpoint Deliverables
 ####Test Engineer Procedure
@@ -53,8 +53,8 @@ To test the parralel input ability of the shift register, simply press button 0.
 | 0        | 0        | 0        | 1011       |
 
 ###SPI Memory
-The fault we have injected is that our Finite State Machine's MISO buffer enable signal is stuck high. This means that output will always be passed to the "outside" even when we don't want it to.
+The fault we have injected is that our Finite State Machine's MISO buffer enable signal is stuck high, mimicking a short across the MISO buffer. This means that output will always be passed to the "outside" even when we don't want it to.
 ####Schematic
 ![SPI Fault](spimemory_broken.png)
 
-Symptoms of this error are test cases failing due to the output being driven when it should be undriven due to the tri-state buffer being stuck on.
+A test pattern that will detect this fault is to set the MOSI pin high and cycle the signal clock once. If the MISO pin is undriven, then the error is not present, if the MISO pin is driven to the value of the MOSI pin, the error is present.
