@@ -22,9 +22,13 @@ module finitestatemachine
   initial begin
     count = 0;
     state = 0;
+    assign miso_enable = 0;
+    assign sr_we = 0;
+    assign addr_we = 0;
+    assign dm_we = 0;
   end
 
-  always @(sclk) begin
+  always @(posedge sclk) begin
     if (cs) begin
       state = state_GETTING;
       count = 0;
@@ -77,8 +81,12 @@ module finitestatemachine
         assign dm_we = 1;
         state = state_DONE;
       end
-      else begin
+      else if (state == state_DONE) begin
         count = 0;
+        assign miso_enable = 0;
+        assign sr_we = 0;
+        assign addr_we = 0;
+        assign dm_we = 0;
       end
     end
   end

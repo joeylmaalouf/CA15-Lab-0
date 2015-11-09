@@ -36,6 +36,9 @@ module spiMemory
   datamemory dm0(clk, dmem_out, address[6:0], dm_we, sr_par_out);
   always @(posedge clk) begin
     if (miso_buf) begin
+      $display("SR Params %b %b %b %b %b", clk, sclk_pos, sr_we, dmem_out, mosi_cond);
+      $display("Parallel Out: %b", sr_par_out);
+      $display("Serial Out: %b", sr_ser_out);
       storage <= dff_out;
     end
     else begin
