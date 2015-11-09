@@ -5,7 +5,7 @@
 ![Input Conditioner Circuit Diagram](input-conditioner.png)
 
 ####Glitch Suppression
-If the system clock is at 50MHz and the waittime is 10, then the longest glitch that will be suppressed is 9/50,000,000'th of a second long because on the 10th clock cycle the glitch will be treated as a proper signal.
+If the system clock is at 50MHz and the waittime is 3, then the longest glitch that will be suppressed is just under 3 clock cycles long (<59ns).
 
 ###Shift Register
 ####Test Bench Strategy
