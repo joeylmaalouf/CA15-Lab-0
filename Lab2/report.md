@@ -9,7 +9,7 @@ If the system clock is at 50MHz and the waittime is 3, then the longest glitch t
 
 ###Shift Register
 ####Test Bench Strategy
-<TODO>
+In order to test the Shift Register sufficiently, we decided to systematically test the various possible states of the register. The test bench is set up to purposefully provide inputs targetting both states at the same time, neither, and one over the other in order to prove there is no overlap or confusion. In order to exhaustively prove the function, we had the peripheral clock edge be set to zero, and tested to make sure nothing changed when this was the case. All tests performed as expected and responded appropriately to broken Shift Registers.
 
 ###Midpoint Deliverables
 ####Test Engineer Procedure
