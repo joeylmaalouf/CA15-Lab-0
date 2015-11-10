@@ -1,8 +1,8 @@
-`include "datamemory.v"
-`include "dflipflop.v"
-`include "finitestatemachine.v"
-`include "inputconditioner.v"
-`include "shiftregister.v"
+//`include "datamemory.v"
+//`include "dflipflop.v"
+//`include "finitestatemachine.v"
+//`include "inputconditioner.v"
+//`include "shiftregister.v"
 
 module spiMemory
 (
@@ -11,7 +11,7 @@ module spiMemory
   input       cs_pin,    // SPI chip select
   output      miso_pin,  // SPI master in slave out
   input       mosi_pin,  // SPI master out slave in
-  input       fault_pin, // For fault injection testing
+  //input       fault_pin, // For fault injection testing
   output[3:0] leds       // LEDs for debugging
 );
   wire[4:0] unused;
@@ -36,20 +36,17 @@ module spiMemory
   datamemory dm0(clk, dmem_out, address[6:0], dm_we, sr_par_out);
   always @(posedge clk) begin
     if (miso_buf) begin
-      $display("SR Params %b %b %b %b %b", clk, sclk_pos, sr_we, dmem_out, mosi_cond);
-      $display("Parallel Out: %b", sr_par_out);
-      $display("Serial Out: %b", sr_ser_out);
       storage <= dff_out;
     end
     else begin
-      storage = 'Z;
+      storage = 1'bZ;
     end
   end
   assign miso_pin = storage;
   assign leds = state;
 endmodule
 
-module spiMemory_breakable
+/*module spiMemory_breakable
 (
   input       clk,       // FPGA clock
   input       sclk_pin,  // SPI clock
@@ -84,9 +81,10 @@ module spiMemory_breakable
       storage <= dff_out;
     end
     else begin
-      storage = 'Z;
+      storage = 1'bZ;
     end
   end
   assign miso_pin = storage;
   assign leds = state;
 endmodule
+*/

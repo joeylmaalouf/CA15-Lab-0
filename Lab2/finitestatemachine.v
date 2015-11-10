@@ -44,9 +44,9 @@ module finitestatemachine
         end
       end
       else if (state == state_GOT) begin
-        assign addr_we = 1;
+        addr_we = 1;
         count = 0;
-        if (shiftRegOutP0 == 0) begin
+        if (shiftRegOutP0) begin
           state = state_READ_1;
         end
         else begin
@@ -57,11 +57,11 @@ module finitestatemachine
         state = state_READ_2;
       end
       else if (state == state_READ_2) begin
-        assign sr_we = 1;
+        sr_we = 1;
         state = state_READ_3;
       end
       else if (state == state_READ_3) begin
-        assign miso_enable = 1;
+        miso_enable = 1;
         if (count == 8) begin
           state = state_DONE;
         end
@@ -78,15 +78,15 @@ module finitestatemachine
         end
       end
       else if (state == state_WRITE_2) begin
-        assign dm_we = 1;
+        dm_we = 1;
         state = state_DONE;
       end
       else if (state == state_DONE) begin
         count = 0;
-        assign miso_enable = 0;
-        assign sr_we = 0;
-        assign addr_we = 0;
-        assign dm_we = 0;
+        miso_enable = 0;
+        sr_we = 0;
+        addr_we = 0;
+        dm_we = 0;
       end
     end
   end
