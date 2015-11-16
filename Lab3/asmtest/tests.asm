@@ -125,8 +125,8 @@ main:
   j end
 
 increment0:
-addiu $t0, $t0, 1
-jr $ra
+  addiu $t0, $t0, 1
+  jr $ra
 
 error:
   li $v0, 4 # flag for syscall to print a string
