@@ -2,18 +2,22 @@
   successmsg: .asciiz "All test cases passed succesfully."
   errormsgs:
     m0: .asciiz "Error: LW/SW test case(s) failed."
-    m1: .asciiz "Error: ADD test case(s) failed."
-    m2: .asciiz "Error: SUB test case(s) failed."
-    m3: .asciiz "Error: SLT test case(s) failed."
+    m1: .asciiz "Error: J test case(s) failed."
+    m2: .asciiz "Error: JR/JAL test case(s) failed."
+    m3: .asciiz "Error: BNE test case(s) failed."
     m4: .asciiz "Error: XORI test case(s) failed."
-  # etc.
+    m5: .asciiz "Error: ADD test case(s) failed."
+    m6: .asciiz "Error: SUB test case(s) failed."
+    m7: .asciiz "Error: SLT test case(s) failed."
   erroraddrs:
     .word m0
     .word m1
     .word m2
     .word m3
     .word m4
-    # etc.
+    .word m5
+    .word m6
+    .word m7
     .word 0
 
 
@@ -24,8 +28,39 @@ main:
   sw $t0, 0x00007000
   lw $t1, 0x00007000
   bne $t0, $t1, error
+  li $t0, 8
+  sw $t0, 0x00007004
+  lw $t1, 0x00007004
+  bne $t0, $t1, error
+
+  li $t6, 1 # J flag
+  li $t0, 0
+  li $t1, 0
+  j skipbad
+  addiu $t0, $t0, 999
+  skipbad:
+  bne $t0, $t1, error
+
+  li $t6, 2 # JR/JAL flag
+  li $t0, 0
+  li $t1, 1
+  jal intermediate
+  bne $t0, $t1, error
+
+  li $t6, 3 # BNE flag
+
+  li $t6, 4 # XORI flag
+  li $t1, 0x5
+  xori $t0, $t1, 0x4
+  bne $t0, 0x1, error
+  li $t1, 0x6
+  xori $t0, $t1, 0x3
+  bne $t0, 0x5, error
+  li $t1, 0x12
+  xori $t0, $t1, 0x12
+  bne $t0, 0x0, error
   
-  li $t6, 1 # ADD flag
+  li $t6, 5 # ADD flag
   li $t1, 100
   li $t2, 200
   add $t0, $t1, $t2
@@ -42,7 +77,7 @@ main:
   add $t0, $t1, $t2
   bne $t0, 0, error
 
-  li $t6, 2 # SUB flag
+  li $t6, 6 # SUB flag
   li $t1, 200
   li $t2, 0
   sub $t0, $t1, $t2
@@ -58,7 +93,7 @@ main:
   sub $t0, $t1, $t1
   bne $t0, 0, error
 
-  li $t6, 3 # SLT flag
+  li $t6, 7 # SLT flag
   li $t1, 100
   li $t2, 200
   slt $t0, $t1, $t2
@@ -80,23 +115,15 @@ main:
   slt $t0, $t1, $t2
   bne $t0, 0, error
 
-  li $t6, 4 # XORI flag
-  li $t1, 0x100
-  xori $t0, $t1, 0x100
-  bne $t0, 0x100, error
-  li $t1, 0x0c20f
-  xori $t0, $t1, 0x10f10
-  bne $t0, 0x11011, error
-  li $t1, 0x2030402
-  li $t2, 0x0103040
-  xor $t0, $t1, $t2
-  bne $t0, 0x1111111, error
-
   # show off success
   li $v0, 4 # flag for syscall to print a string
   la $a0, successmsg # value to print
   syscall
   j end
+
+intermediate:
+addiu $t0, $t0, 1
+jr $ra
 
 error:
   li $v0, 4 # flag for syscall to print a string
