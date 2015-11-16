@@ -44,21 +44,24 @@ main:
   li $t6, 2 # JR/JAL flag
   li $t0, 0
   li $t1, 1
-  jal intermediate
+  jal increment0
   bne $t0, $t1, error
 
   li $t6, 3 # BNE flag
+  li $t0, 7
+  li $t1, 7
+  bne $t0, $t1, error
 
   li $t6, 4 # XORI flag
-  li $t1, 0x5
-  xori $t0, $t1, 0x4
-  bne $t0, 0x1, error
-  li $t1, 0x6
-  xori $t0, $t1, 0x3
-  bne $t0, 0x5, error
-  li $t1, 0x12
-  xori $t0, $t1, 0x12
-  bne $t0, 0x0, error
+  li $t0, 0x5
+  xori $t1, $t0, 0x4
+  bne $t1, 0x1, error
+  li $t0, 0x6
+  xori $t1, $t0, 0x3
+  bne $t1, 0x5, error
+  li $t0, 0x12
+  xori $t1, $t0, 0x12
+  bne $t1, 0x0, error
   
   li $t6, 5 # ADD flag
   li $t1, 100
@@ -121,7 +124,7 @@ main:
   syscall
   j end
 
-intermediate:
+increment0:
 addiu $t0, $t0, 1
 jr $ra
 
@@ -130,6 +133,6 @@ error:
   sll $t6, $t6, 2 # multiply our case flag by 4 to align to word boundaries
   lw $t7, erroraddrs($t6) # get the error message corresponding to the case
   la $a0, ($t7) # load it into the right register
-  syscall
+  syscall # perform the operation we set up
 
 end:
