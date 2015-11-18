@@ -1,5 +1,6 @@
-`include "alu.v"
-`include "mux.v"
+`include "alu.v" //  32 bit adder
+`include "mux.v" //  32:1 mux
+`include "mux5.v" // 5:1 mux
 module mips_cpu();
 
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
