@@ -1,6 +1,7 @@
-`include "alu.v" //  32 bit adder
+`include "alu.v"
 `include "mux.v" //  32:1 mux
 `include "mux5.v" // 5:1 mux
+`include "doubleLeftShift"
 module mips_cpu();
 
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
@@ -42,7 +43,7 @@ module mips_cpu();
 	sign_extender immediate_extender(inst_3, extended_immediate);
 
 	//shift left by 2'er module
-	shift_by_two immediate_shifter(extended_immediate, shifted_extended_immediate);
+	shift_by_two immediate_shifter(extended_immediate, shifted_extended_immediate); //included
 
 	//operational register module
 	//async_register register(read_1_addr, read_2_addr, write_addr, write_data, write_enable, read_1, read_2);
