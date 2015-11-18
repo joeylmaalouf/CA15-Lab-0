@@ -19,16 +19,21 @@ module shiftregister
 );
     reg [width-1:0] shiftregistermem;
     always @(posedge clk) begin
-        if (peripheralClkEdge) begin
+	if (peripheralClkEdge) begin
             shiftregistermem = (shiftregistermem << 1);
-            if (parallelLoad == 1) begin
+	    //$display("%b", parallelLoad);
+	    if (parallelLoad == 1) begin
+		//$display("right");
                 shiftregistermem = parallelDataIn;
             end
             else begin
+		//$display("Wrong");
                 shiftregistermem[0] = serialDataIn;
             end    
             serialDataOut = shiftregistermem[width-1];
             parallelDataOut = shiftregistermem;
+	    //$display("set");
+	    //$display("%b", parallelDataOut);
         end
     end
 endmodule
