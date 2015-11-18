@@ -33,7 +33,7 @@ module mips_cpu();
 
 	//instruction register destination mux
   //output, choice 1, choice 2, selector
-	mux5 reg_dest_mux(write_addr, inst_2, inst_3_a, reg_dest);
+	mux5 reg_dest_mux(write_addr, inst_2, inst_3_a, reg_dest); //included
 
 	//memory register module
 	reg32 memory_data_reg(mem_data, mem_data_out);
@@ -49,17 +49,17 @@ module mips_cpu();
 	async_register register(inst_1, inst_2, write_addr, write_data, write_enable, read_1, read_2);
 
 	//alu source mux
-	mux32 alu_src_mux(b, read_2, extended_immediate, alu_src);
+	mux32 alu_src_mux(b, read_2, extended_immediate, alu_src); //included
 
 	//alu module
 	//alu ALU(a, b, alu_res, zero_flag);
-	alu ALU(read_1, b, alu_res, zero_flag, alu_op);
+	alu ALU(read_1, b, alu_res, zero_flag, alu_op); //included 
 
 	//data memory module
 	//data_memory data_mem(mem_read_addr, mem_write_addr, mem_write_data, mem_read, mem_write_enable, mem_read_enable);
 	data_memory data_mem(alu_res, alu_res, read_2, mem_read, mem_write_enable, mem_read_enable);
 
 	//memory to register mux
-	mux32 mem_to_reg_mux(write_data, mem_read, alu_res, mem_to_reg);
+	mux32 mem_to_reg_mux(write_data, mem_read, alu_res, mem_to_reg); //included
 
 endmodule
