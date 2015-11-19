@@ -2,8 +2,9 @@
 `include "mux.v" //  32:1 mux
 `include "mux5.v" // 5:1 mux
 `include "doubleLeftShift"
-`include "signExtendu.v"
-`include "signExtens.v"
+`include "signExtendu.v" //sign extend unsigned
+`include "signExtens.v" //sign extend signed
+`include "regfile.v" //register file
 module mips_cpu();
 
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
