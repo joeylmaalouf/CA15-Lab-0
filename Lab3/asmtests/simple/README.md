@@ -12,7 +12,7 @@
 * `$v0 == 8` means SLT failed
 
 #### Memory Layout Requirements
-None, but if testing in Mars, make sure to go to Settings -> Memory Configuration... -> Compact, Text at Address 0 -> Apply and Close
+None, but if testing in Mars, make sure to go to `Settings -> Memory Configuration... -> Compact, Text at Address 0 -> Apply and Close`
 
 #### Non-Subset Instructions Used
 None
