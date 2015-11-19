@@ -2,6 +2,8 @@
 `include "mux.v" //  32:1 mux
 `include "mux5.v" // 5:1 mux
 `include "doubleLeftShift"
+`include "signExtendu.v"
+`include "signExtens.v"
 module mips_cpu();
 
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
@@ -40,7 +42,7 @@ module mips_cpu();
 	reg32 memory_data_reg(mem_data, mem_data_out);
 
 	//sign extending module
-	sign_extender immediate_extender(inst_3, extended_immediate);
+	sign_extender immediate_extender(inst_3, extended_immediate); //included
 
 	//shift left by 2'er module
 	shift_by_two immediate_shifter(extended_immediate, shifted_extended_immediate); //included
