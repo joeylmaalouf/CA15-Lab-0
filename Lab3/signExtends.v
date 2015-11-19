@@ -1,9 +1,9 @@
 module signExtends( //sign extend signed, for use with 2's compliment
-  input[4:0] d,
-  input clock,
-  output[31:0] q
+  input reg[4:0] d,
+  input reg clk,
+  output reg[31:0] q
 );
-  always @(d && posedge) begin
+  always @(posedge clk) begin
     q <= {{27{d[4]}}, d};
   end
 endmodule

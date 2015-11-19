@@ -1,9 +1,9 @@
-module signExtendu(d, q); //sign extend unsigned
-	input[4:0] d;
-	input clock;
-	output[31:0] q;
-	wire[4:0] d;
-	wire[31:0] q;
-	always @(d && posedge) 
-		q = d;
+module signExtendu( //sign extend unsigned
+  input reg[4:0] d,
+  input reg clk,
+  output reg[31:0] q
+);
+  always @(posedge clk) begin
+    q = d;
+  end
 endmodule
