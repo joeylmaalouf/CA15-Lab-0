@@ -18,10 +18,14 @@ module mips_cpu();
 	wire[5:0] inst_funct;
 	wire[4:0] write_addr;
 	wire[3:0] alu_op;
-	wire reg_dest, alu_src, zero_flag, alu_op, mem_write_enable, mem_read_enable, mem_to_reg, pc_src, jump_enable;
+	wire reg_dest, alu_src, zero_flag, alu_op, mem_write_enable, mem_read_enable, mem_to_reg, pc_src, jump_enable, bne_pc_override, pc_choose;
 
 	//Control Module
-	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable);
+	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override);
+
+	//1-bit mux
+	//ties pc_chooser mux directly to zero flag of ALU for use in BNE operations
+	mux bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
 	//PC register
 	reg32 PC(next_instruction_addr, instruction_addr);
@@ -33,7 +37,7 @@ module mips_cpu();
 	adder32 pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
 
 	//PC chooser
-	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_src, normal_pc);
+	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc);
 
 	//PC Jumper
 	mux32 jump_mux(normal_pc, pc_jump_addr, jump_enable, next_instruction_addr);

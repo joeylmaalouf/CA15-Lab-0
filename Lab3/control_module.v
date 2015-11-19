@@ -9,7 +9,8 @@ module control_module(
 	output write_enable,
 	output mem_read_enable,
 	output[3:0] alu_op,
-	output jump_enable
+	output jump_enable,
+	output bne_pc_override
 );
 
 	always @(op or func) begin
@@ -22,6 +23,7 @@ module control_module(
 		write_enable;
 		alu_op = 4'b0;
 		jump_enable = 0;
+		bne_pc_override = 0;
 
 		if (op == 6'0) begin
 			reg_dest = 1;
@@ -61,7 +63,8 @@ module control_module(
 			jump_enable = 1;
 		end
 		else if (op == 6'b000101) begin //bne
-
+			alu_op = 4'b0110;
+			bne_pc_override = 1;
 		end
 		else if (op == 6'b001110) begin //xori
 			alu_src = 1;
