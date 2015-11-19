@@ -1,11 +1,33 @@
-module mux(inputs, controls, moutput);
-	input[31:0] inputs;
-	input[4:0]  controls;
-	output      moutput;	// called moutput because just output is a recognized term, so mux output is the next better thing
-	wire[31:0]  inputs;
-	wire[4:0]   controls;
-	reg         moutput;
+module mux32(
+	input[31:0] a,
+	input[31:0] b,
+	input selector,
+	output[31:0] c
+);
 	
-	always@(controls or inputs)
-		moutput = inputs[controls];
+	always@(a or b or selector) begin
+		if (selector == 0) begin
+			c = a;
+		end
+		else if (selector == 1) begin
+			c = b;
+		end
+	end
+endmodule
+
+module mux5(
+	input[4:0] a,
+	input[4:0] b,
+	input selector,
+	output[4:0] c
+);
+	
+	always@(a or b or selector) begin
+		if (selector == 0) begin
+			c = a;
+		end
+		else if (selector == 1) begin
+			c = b;
+		end
+	end
 endmodule

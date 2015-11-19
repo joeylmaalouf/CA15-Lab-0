@@ -11,14 +11,17 @@ module mips_cpu();
 						 jumped_pc, mem_data_out, extended_immediate, shifted_extended_immediate, b;
 	wire[31:26] op;
 	wire[25:21] inst_1;
+	wire[25:0] jump_instruction_addr;
 	wire[20:16] inst_2;
-	wire[15:11] inst_3_a
+	wire[15:11] inst_3_a;
 	wire[15:0] inst_3_b;
+	wire[5:0] inst_funct;
 	wire[4:0] write_addr;
-	wire reg_dest, alu_src, zero_flag, alu_op, mem_write_enable, mem_read_enable, mem_to_reg, pc_src;
+	wire[3:0] alu_op;
+	wire reg_dest, alu_src, zero_flag, alu_op, mem_write_enable, mem_read_enable, mem_to_reg, pc_src, jump_enable;
 
 	//Control Module
-	cpu_control controle_module(op, reg_dest, alu_src, alu_op, mem_write_enable, mem_to_reg, pc_src);
+	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable);
 
 	//PC register
 	reg32 PC(next_instruction_addr, instruction_addr);
@@ -26,18 +29,27 @@ module mips_cpu();
 	//PC incrementer
 	adder32 pc_incrementer(instruction_addr_plus4, instruction_addr, 32'b00000000000000000000000000000100);
 
-	//PC jump adder
-	adder32 pc_jumper(jumped_pc, instruction_addr_plus4, shifted_extended_immediate);
+	//PC adder
+	adder32 pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
 
 	//PC chooser
-	mux32 pc_chooser(next_instruction_addr, instruction_addr_plus4, jumped_pc, pc_src);
+	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_src, normal_pc);
+
+	//PC Jumper
+	mux32 jump_mux(normal_pc, pc_jump_addr, jump_enable, next_instruction_addr);
+
+	//Take address from instruction and shift left by 2
+	shift_by_two jump_shifter(jump_instruction_addr, jump_instruction_addr_shifted);
+
+	//Concat shifted jump address with 4 most significant bits of PC+4
+	concatenator jump_add_concat(instruction_addr_plus4, jump_instruction_addr_shifted, pc_jump_addr);
 
 	//instruction memory module
-	instruction_mem instruction_memory(instruction_addr, op, inst_1, inst_2, inst_3_a, inst_3_b);
+	instruction_mem instruction_memory(instruction_addr, op, inst_1, inst_2, inst_3_a, inst_3_b, inst_funct, jump_instruction_addr);
 
 	//instruction register destination mux
-  //output, choice 1, choice 2, selector
-	mux5 reg_dest_mux(write_addr, inst_2, inst_3_a, reg_dest); //included
+    //output, choice 1, choice 2, selector
+	mux5 reg_dest_mux(inst_2, inst_3_a, reg_dest, write_addr); //included
 
 	//memory register module
 	reg32 memory_data_reg(mem_data, mem_data_out);
@@ -64,6 +76,6 @@ module mips_cpu();
 	data_memory data_mem(alu_res, alu_res, read_2, mem_read, mem_write_enable, mem_read_enable);
 
 	//memory to register mux
-	mux32 mem_to_reg_mux(write_data, mem_read, alu_res, mem_to_reg); //included
+	mux32 mem_to_reg_mux(alu_res, mem_read, mem_to_reg, write_data); //included
 
 endmodule
