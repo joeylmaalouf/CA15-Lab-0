@@ -1,6 +1,6 @@
 `include "alu.v"
+`include "arithmatic.v"
 `include "mux.v" //  32:1 mux
-`include "mux5.v" // 5:1 mux
 `include "doubleLeftShift.v" // shift left by 2
 `include "signExtendu.v" //sign extend unsigned
 `include "signExtens.v" //sign extend signed
@@ -8,7 +8,8 @@
 module mips_cpu();
 
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
-						 jumped_pc, mem_data_out, extended_immediate, shifted_extended_immediate, b;
+						 jumped_pc, mem_data, mem_data_out, extended_immediate, shifted_extended_immediate, b,
+						 normal_pc, pc_jump_addr;
 	wire[31:26] op;
 	wire[25:21] inst_1;
 	wire[25:0] jump_instruction_addr;
@@ -19,7 +20,7 @@ module mips_cpu();
 	wire[5:0] inst_funct;
 	wire[4:0] write_addr;
 	wire[2:0] alu_op;
-	wire reg_dest, alu_src, zero_flag, alu_op, mem_write_enable, mem_read_enable, mem_to_reg, pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr;
+	wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr;
 
 	//Control Module
 	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
@@ -32,10 +33,10 @@ module mips_cpu();
 	reg32 PC(next_instruction_addr, instruction_addr);
 
 	//PC incrementer
-	adder32 pc_incrementer(instruction_addr_plus4, instruction_addr, 32'b00000000000000000000000000000100);
+	bitwiseAdder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'b00000000000000000000000000000100);
 
 	//PC adder
-	adder32 pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
+	bitwiseAdder pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
 
 	//PC chooser
 	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc);
@@ -61,6 +62,7 @@ module mips_cpu();
 	mux5 jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr);
 
 	//memory register module
+	//Needs fixin
 	reg32 memory_data_reg(mem_data, mem_data_out);
 
 	//sign extending module
@@ -71,7 +73,7 @@ module mips_cpu();
 
 	//operational register module
 	//async_register register(read_1_addr, read_2_addr, write_addr, write_data, write_enable, read_1, read_2);
-	async_register register(inst_1, inst_2, write_addr, write_data, write_enable, read_1, read_2);
+	regfile register(inst_1, inst_2, write_addr, write_data, write_enable, read_1, read_2);
 
 	//alu source mux
 	mux32 alu_src_mux(b, read_2, extended_immediate, alu_src); //included
