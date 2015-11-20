@@ -27,17 +27,17 @@ module control_module(
 		bne_pc_override = 0;
 		jal_reg_override = 0;
 
-		if (op == 6'0) begin
+		if (op == 6'b0) begin
 			reg_dest = 1;
 			reg_write_enable = 1;
-			if (func == 6'b10000) begin //add
-				alu_op = 3'b0010;
+			if (func == 6'b010000) begin //add
+				alu_op = 3'b010;
 			end
 			else if (func == 6'b100010) begin //sub
-				alu_op = 3'b0110;
+				alu_op = 3'b110;
 			end
 			else if (func == 6'b101010) begin //slt
-				alu_op = 3'b0111;
+				alu_op = 3'b111;
 			end
 			else if (func == 6'b001000) begin //jr
 				pc_src = 1;
@@ -48,12 +48,12 @@ module control_module(
 			mem_to_reg = 1;
 			write_enable = 1;
 			mem_read_enable = 1;
-			alu_op = 3'b0010;
+			alu_op = 3'b010;
 		end
 		else if (op == 6'b101011) begin //SW
 			alu_src = 1;
 			mem_write_enable = 1;
-			alu_op = 3'b0010;
+			alu_op = 3'b010;
 		end
 		else if (op == 6'b000011) begin //jal
 			jump_enable = 1;
@@ -64,7 +64,7 @@ module control_module(
 			jump_enable = 1;
 		end
 		else if (op == 6'b000101) begin //bne
-			alu_op = 3'b0110;
+			alu_op = 3'b110;
 			bne_pc_override = 1;
 		end
 		else if (op == 6'b001110) begin //xori
