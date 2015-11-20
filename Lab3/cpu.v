@@ -1,15 +1,15 @@
 `include "alu.v"
 `include "arithmatic.v"
+`include "control_module.v"
 `include "mux.v" //  32:1 mux
 `include "doubleLeftShift.v" // shift left by 2
 `include "signExtendu.v" //sign extend unsigned
 `include "signExtens.v" //sign extend signed
 `include "regfile.v" //register file
 module mips_cpu();
-
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
-						 jumped_pc, mem_data, mem_data_out, extended_immediate, shifted_extended_immediate, b,
-						 normal_pc, pc_jump_addr;
+				jumped_pc, mem_data, mem_data_out, extended_immediate, shifted_extended_immediate, b,
+				normal_pc, pc_jump_addr;
 	wire[31:26] op;
 	wire[25:21] inst_1;
 	wire[25:0] jump_instruction_addr;
@@ -20,8 +20,9 @@ module mips_cpu();
 	wire[5:0] inst_funct;
 	wire[4:0] write_addr;
 	wire[2:0] alu_op;
-	wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr;
-
+	wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
+		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr;
+		 
 	//Control Module
 	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
 
