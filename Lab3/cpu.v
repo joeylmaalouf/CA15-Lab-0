@@ -1,7 +1,7 @@
 `include "alu.v"
 `include "mux.v" //  32:1 mux
 `include "mux5.v" // 5:1 mux
-`include "doubleLeftShift"
+`include "doubleLeftShift.v" // shift left by 2
 `include "signExtendu.v" //sign extend unsigned
 `include "signExtens.v" //sign extend signed
 `include "regfile.v" //register file
@@ -12,6 +12,7 @@ module mips_cpu();
 	wire[31:26] op;
 	wire[25:21] inst_1;
 	wire[25:0] jump_instruction_addr;
+	wire[27:0] jump_instruction_addr_shifted;
 	wire[20:16] inst_2;
 	wire[15:11] inst_3_a;
 	wire[15:0] inst_3_b;
