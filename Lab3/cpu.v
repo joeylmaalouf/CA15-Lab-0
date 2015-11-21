@@ -32,6 +32,9 @@ module mips_cpu
   wire reg_dest, alu_src, zero_flag, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
        pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, carryout;
 
+
+  leftShift32 #(32) initialize_instr_addr(instruction_addr, instruction_addr, 1'b1, clk);
+
   // control Module
   control_module cpu_control(op, func, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
 
@@ -76,7 +79,7 @@ module mips_cpu
   signExtends immediate_extender(imm, clk, extended_immediate);
 
   // shift left by 2'er module
-  doubleLeftShift32 immediate_shifter(extended_immediate, shifted_extended_immediate, 1'b1, clk);
+  leftShift32 #(2) immediate_shifter(extended_immediate, shifted_extended_immediate, 1'b1, clk);
 
   // mux selector for error output
   mux #(5) rs_mux(rs, 5'd2, error_mux_select, rs);
