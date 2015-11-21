@@ -1,7 +1,7 @@
 `include "cpu.v"
 module CPUTest();
   wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
-  		jumped_pc, mem_data, mem_data_out, extended_immediate, shifted_extended_immediate, b,
+  		jumped_pc, extended_immediate, shifted_extended_immediate, b,
   		normal_pc, pc_jump_addr, read_1, read_2, normal_write_data;
   wire[31:26] op;
   wire[25:21] inst_1;
@@ -40,8 +40,6 @@ module CPUTest();
 	.instruction_addr(instruction_addr),
 	.instruction_addr_plus4(instruction_addr_plus4),
 	.jumped_pc(jumped_pc),
-	.mem_data(mem_data),
-	.mem_data_out(mem_data_out),
 	.extended_immediate(extended_immediate),
 	.shifted_extended_immediate(shifted_extended_immediate),
 	.b(b),

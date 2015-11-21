@@ -7,8 +7,6 @@ sim:/CPUTest/alu_res \
 sim:/CPUTest/next_instruction_addr \
 sim:/CPUTest/instruction_addr \
 sim:/CPUTest/jumped_pc \
-sim:/CPUTest/mem_data \
-sim:/CPUTest/mem_data_out \
 sim:/CPUTest/extended_immediate \
 sim:/CPUTest/shifted_extended_immediate \
 sim:/CPUTest/b \
