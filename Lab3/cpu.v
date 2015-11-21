@@ -39,10 +39,10 @@ input Clk
 	register32 PC(next_instruction_addr, instruction_addr); //in progress
 
 	//PC incrementer
-	bitwiseAdd pc_incrementer(instruction_addr_plus4, overflow, instruction_addr, 32'd4, 1'b0);
+	bitwiseADD pc_incrementer(instruction_addr_plus4, overflow, instruction_addr, 32'd4, 1'b0); //checked
 
 	//PC adder
-	bitwiseAdd pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
+	bitwiseADD pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
 
 	//PC chooser
 	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc);
