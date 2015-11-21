@@ -1,17 +1,17 @@
 module control_module(
 	input[5:0] op,
 	input[5:0] func,
-	output reg_dest,
-	output alu_src,
-	output mem_write_enable, 
-	output mem_to_reg, 
-	output pc_src,
-	output write_enable,
-	output mem_read_enable,
-	output[2:0] alu_op,
-	output jump_enable,
-	output bne_pc_override,
-	output jal_reg_override
+	output reg reg_dest,
+	output reg alu_src,
+	output reg mem_write_enable, 
+	output reg mem_to_reg, 
+	output reg pc_src,
+	output reg write_enable,
+	output reg mem_read_enable,
+	output reg[2:0] alu_op,
+	output reg jump_enable,
+	output reg bne_pc_override,
+	output reg jal_reg_override
 );
 
 	always @(op or func) begin
@@ -21,7 +21,7 @@ module control_module(
 		mem_read_enable = 0;
 		mem_to_reg = 0;
 		pc_src = 0;
-		write_enable;
+		write_enable = 0;
 		alu_op = 3'b0;
 		jump_enable = 0;
 		bne_pc_override = 0;
@@ -29,7 +29,7 @@ module control_module(
 
 		if (op == 6'b0) begin
 			reg_dest = 1;
-			reg_write_enable = 1;
+			write_enable = 1;
 			if (func == 6'b010000) begin //add
 				alu_op = 3'b010;
 			end

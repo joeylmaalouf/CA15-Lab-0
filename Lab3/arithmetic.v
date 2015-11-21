@@ -67,7 +67,7 @@ module bitwiseSUB(
 );
   wire[31:0] neg_b;
   bitwiseINV myInverter(neg_b, b);
-  bitwiseADD myAdder(out, overflow, a, neg_b, 1);
+  bitwiseADD myAdder(out, overflow, a, neg_b, 1'b1);
 endmodule  
 
 module lessThan(
@@ -80,8 +80,8 @@ module lessThan(
   wire disqualifier0;
   wire nota, notb;
   wire[31:0] output_temp;
-  bitwiseSUB mySubber(output_temp, overflow, a, b, 0);
-  `AND(condition0, output_temp[31], 1);
+  bitwiseSUB mySubber(output_temp, overflow, a, b, 1'b0);
+  `AND(condition0, output_temp[31], 1'b1);
   `NOT(nota, a[31]);
   `AND(disqualifier0, nota, b[31]);
   `NOT(isNotGreaterThan, disqualifier0);

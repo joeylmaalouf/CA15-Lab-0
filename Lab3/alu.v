@@ -17,13 +17,13 @@ module ALU(
   output reg       overflow,
   input[31:0]      operandA,
   input[31:0]      operandB,
-  input[3:0]       command
+  input[2:0]       command
 );
   wire[31:0] results[0:7];
   wire[1:0] overflows;
-  bitwiseADD  bADD (results[`ADD ], overflows[`ADD], operandA, operandB, 0);
-	bitwiseSUB  bSUB (results[`SUB ], overflows[`SUB], operandA, operandB, 0);
-	lessThan    bSLT (results[`SLT ], operandA, operandB);
+  bitwiseADD  bADD (results[`ADD ], overflows[`ADD], operandA, operandB, 1'b0);
+  bitwiseSUB  bSUB (results[`SUB ], overflows[`SUB], operandA, operandB, 1'b0);
+  lessThan    bSLT (results[`SLT ], operandA, operandB);
   bitwiseXOR  bXOR (results[`XOR ], operandA, operandB);
   bitwiseAND  bAND (results[`AND ], operandA, operandB);
   bitwiseOR   bOR  (results[`OR  ], operandA, operandB);

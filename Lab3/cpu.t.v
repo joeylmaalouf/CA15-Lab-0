@@ -1,7 +1,7 @@
 `include "cpu.v"
 module CPUTest();
   reg clk;
-  wire error_code;
+  wire[31:0] error_code;
   mips_cpu dut(
   .clk(clk),
   .error_code(error_code)

@@ -1,7 +1,7 @@
 module datamemory(
   input        clk,
-  input[13:0]  readAddr,
-  input[13:0]  writeAddr,
+  input[31:0]  readAddr,
+  input[31:0]  writeAddr,
   input        readEn,
   input        writeEn,
   input[31:0]  dIn,
@@ -10,10 +10,10 @@ module datamemory(
   reg[31:0] mem[16383:0];
   always @(posedge clk) begin
     if (writeEn) begin
-      mem[writeAddr] <= dIn;
+      mem[writeAddr[13:0]] <= dIn;
     end
     if (readEn) begin
-      dOut <= mem[readAddr];
+      dOut <= mem[readAddr[13:0]];
     end
   end
 endmodule

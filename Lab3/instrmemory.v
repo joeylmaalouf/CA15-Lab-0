@@ -1,5 +1,5 @@
 module instrmemory(
-  input[6:0]        addr,
+  input[31:0]       addr,
   output reg[31:26] op,
   output reg[25:21] rs,
   output reg[20:16] rt,
@@ -13,7 +13,7 @@ module instrmemory(
   reg[31:0] instr;
   initial $readmemh("tests.dat", mem);
   always @(addr) begin
-    instr = mem[addr];
+    instr = mem[addr[6:0]];
     op = instr[31:26];
     rs = instr[25:21];
     rt = instr[20:16];
