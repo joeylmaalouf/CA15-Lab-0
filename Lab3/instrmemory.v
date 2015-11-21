@@ -14,6 +14,7 @@ module instrmemory(
   initial $readmemh("tests.dat", mem);
   always @(addr) begin
     instr = mem[addr[6:0]];
+    $display("New instruction: %b", instr);
     op = instr[31:26];
     rs = instr[25:21];
     rt = instr[20:16];

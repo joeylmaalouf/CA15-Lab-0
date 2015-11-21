@@ -14,7 +14,7 @@ module mips_cpu
   input clk,
   output reg[31:0] error_code
 );
-  wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, instruction_addr_plus_immediate,
+  wire[31:0] mem_read, alu_res, instruction_addr, next_instruction_addr, instruction_addr_plus4, instruction_addr_plus_immediate,
              jumped_pc, extended_immediate, shifted_extended_immediate, b,
              normal_pc, pc_jump_addr, read_1, read_2, normal_write_data, write_data;
   wire[31:26] op;
