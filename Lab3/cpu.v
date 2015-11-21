@@ -56,17 +56,17 @@ module mips_cpu
 
 	//Concat shifted jump address with 4 most significant bits of PC+4
 	//Stick the 4 most significant bits of PC+4 on to the shifted immediate from the instruction
-	concatenator jump_add_concat(instruction_addr_plus4, jump_instruction_addr_shifted, pc_jump_addr);
+	concatenator jump_add_concat(instruction_addr_plus4, jump_instruction_addr_shifted, clk, pc_jump_addr); //checked
 
 	//instruction memory module
 	instruction_mem instruction_memory(instruction_addr, op, inst_1, inst_2, inst_3_a, inst_3_b, inst_funct, jump_instruction_addr);
 
 	//instruction register destination mux
     //output, choice 1, choice 2, selector
-	mux5 reg_dest_mux(inst_2, inst_3_a, reg_dest, normal_write_addr); //included
+	mux5 reg_dest_mux(inst_2, inst_3_a, reg_dest, normal_write_addr); //checked
 
 	//mux to choose address to write to for jal op
-	mux5 jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr);
+	mux5 jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr); //checked
 
 	//sign extending module
 	sign_extender immediate_extender(inst_3, extended_immediate); //included
@@ -90,10 +90,10 @@ module mips_cpu
 	datamemory data_mem(clk, alu_res, alu_res, mem_read_enable, mem_write_enable, read_2, mem_read); //checked
 
 	//memory to register mux
-	mux32 mem_to_reg_mux(alu_res, mem_read, mem_to_reg, normal_write_data); //included
+	mux32 mem_to_reg_mux(alu_res, mem_read, mem_to_reg, normal_write_data); //checked
 
 	//Optionally forces register to write PC+4 to whatever address
 	//useful for jal operations
-	mux32 jal_data_mux(normal_write_data, instruction_addr_plus4, jal_reg_override, write_data);
+	mux32 jal_data_mux(normal_write_data, instruction_addr_plus4, jal_reg_override, write_data); //checked
 
 endmodule
