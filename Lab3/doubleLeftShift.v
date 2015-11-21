@@ -1,5 +1,5 @@
 module doubleLeftShift(    
-    input reg[25:0]        d,
+    input reg[25:0]    d,
     output reg[27:0]   q,
     input              enable,
     input	       clk

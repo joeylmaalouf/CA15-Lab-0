@@ -52,7 +52,7 @@ module mips_cpu
 	mux32 jump_mux(normal_pc, pc_jump_addr, jump_enable, next_instruction_addr); //checked
 
 	//Take address from instruction and shift left by 2
-	shift_by_two jump_shifter(jump_instruction_addr, jump_instruction_addr_shifted);
+	shift_by_two jump_shifter(jump_instruction_addr, jump_instruction_addr_shifted, 1, clk); //checked
 
 	//Concat shifted jump address with 4 most significant bits of PC+4
 	//Stick the 4 most significant bits of PC+4 on to the shifted immediate from the instruction
