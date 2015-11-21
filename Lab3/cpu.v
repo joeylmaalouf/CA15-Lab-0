@@ -1,11 +1,11 @@
 `include "alu.v"
 `include "arithmetic.v"
 `include "control_module.v"
-`include "mux.v" //  contains all muxes
-`include "doubleLeftShift.v" // shift left by 2
-`include "signExtendu.v" //sign extend unsigned
-`include "signExtens.v" //sign extend signed
-`include "regfile.v" //register file
+`include "mux.v"
+`include "doubleLeftShift.v"
+`include "signExtendu.v"
+`include "signExtends.v"
+`include "regfile.v"
 `include "datamemory.v"
 `include "instrmemory.v"
 module mips_cpu
@@ -34,7 +34,7 @@ module mips_cpu
 	//2:1 mux
 	//ties pc_chooser mux directly to zero flag of ALU for use in BNE operations
 	// input 0, input 1, choice, output
-	mux2 bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose); //checked
+	mux #(2) bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose); //checked
 
 	//PC register
 	register32 PC(instruction_addr, next_instruction_addr, 1`b1, clk); //checked
@@ -46,10 +46,10 @@ module mips_cpu
 	bitwiseADD pc_jumper(instruction_addr_plus_immediate, overflow, instruction_addr_plus4, shifted_extended_immediate, 1'b0); //checked
 
 	//PC chooser
-	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc); //checked
+	mux #(32) pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc); //checked
 
 	//PC Jumper
-	mux32 jump_mux(normal_pc, pc_jump_addr, jump_enable, next_instruction_addr); //checked
+	mux #(32) jump_mux(normal_pc, pc_jump_addr, jump_enable, next_instruction_addr); //checked
 
 	//Take address from instruction and shift left by 2
 	doubleLeftShift jump_shifter(jump_instruction_addr, jump_instruction_addr_shifted, 1, clk); //checked
@@ -63,10 +63,10 @@ module mips_cpu
 
 	//instruction register destination mux
     //output, choice 1, choice 2, selector
-	mux5 reg_dest_mux(inst_2, inst_3_a, reg_dest, normal_write_addr); //checked
+	mux #(5) reg_dest_mux(inst_2, inst_3_a, reg_dest, normal_write_addr); //checked
 
 	//mux to choose address to write to for jal op
-	mux5 jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr); //checked
+	mux #(5) jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr); //checked
 
 	//sign extending module
 	sign_extender immediate_extender(inst_3, extended_immediate); //included
@@ -79,7 +79,7 @@ module mips_cpu
 	regfile register(read_1, read_2, write_data, inst_1, inst_2, write_addr, write_enable, clk); //checked
 
 	//alu source mux
-	mux32 alu_src_mux(read_2, extended_immediate, alu_src, b); //checked 
+	mux #(32) alu_src_mux(read_2, extended_immediate, alu_src, b); //checked 
 
 	//alu module
 	//alu ALU(a, b, alu_res, zero_flag);
@@ -90,10 +90,10 @@ module mips_cpu
 	datamemory data_mem(clk, alu_res, alu_res, mem_read_enable, mem_write_enable, read_2, mem_read); //checked
 
 	//memory to register mux
-	mux32 mem_to_reg_mux(alu_res, mem_read, mem_to_reg, normal_write_data); //checked
+	mux #(32) mem_to_reg_mux(alu_res, mem_read, mem_to_reg, normal_write_data); //checked
 
 	//Optionally forces register to write PC+4 to whatever address
 	//useful for jal operations
-	mux32 jal_data_mux(normal_write_data, instruction_addr_plus4, jal_reg_override, write_data); //checked
+	mux #(32) jal_data_mux(normal_write_data, instruction_addr_plus4, jal_reg_override, write_data); //checked
 
 endmodule

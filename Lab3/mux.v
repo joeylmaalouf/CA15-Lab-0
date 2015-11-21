@@ -1,50 +1,17 @@
-module mux32(
-	input[31:0] a,
-	input[31:0] b,
-	input selector,
-	output[31:0] c
+module mux
+#(parameter depth = 2)
+(
+  input[depth-1:0]      a,
+  input[depth-1:0]      b,
+  input                 selector,
+  output reg[depth-1:0] c
 );
-	
-	always@(a or b or selector) begin
-		if (selector == 0) begin
-			c = a;
-		end
-		else if (selector == 1) begin
-			c = b;
-		end
-	end
-endmodule
-
-module mux5(
-	input[4:0] a,
-	input[4:0] b,
-	input selector,
-	output[4:0] c
-);
-	
-	always@(a or b or selector) begin
-		if (selector == 0) begin
-			c = a;
-		end
-		else if (selector == 1) begin
-			c = b;
-		end
-	end
-endmodule
-
-module mux2(
-	input a,
-	input b,
-	input selector,
-	output c
-);
-
-	always@(a or b or selector) begin
-		if (selector == 0) begin
-			c = a;
-		end
-		else if (selector == 1) begin
-			c = b;
-		end
-	end
+  always @(a or b or selector) begin
+    if (selector) begin
+      c = b;
+    end
+    else begin
+      c = a;
+    end
+  end
 endmodule
