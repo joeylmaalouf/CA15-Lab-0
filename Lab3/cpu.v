@@ -13,7 +13,7 @@ module mips_cpu
   input clk
 );
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
-				jumped_pc, mem_data, mem_data_out, extended_immediate, shifted_extended_immediate, b,
+				jumped_pc, extended_immediate, shifted_extended_immediate, b,
 				normal_pc, pc_jump_addr, read_1, read_2, normal_write_data;
 	wire[31:26] op;
 	wire[25:21] inst_1;
@@ -43,7 +43,7 @@ module mips_cpu
 	bitwiseADD pc_incrementer(instruction_addr_plus4, overflow, instruction_addr, 32'd4, 1'b0); //checked
 
 	//PC adder
-	bitwiseADD pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
+	bitwiseADD pc_jumper(instruction_addr_plus_immediate, overflow, instruction_addr_plus4, shifted_extended_immediate, 1'b0); //checked
 
 	//PC chooser
 	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc);
@@ -67,9 +67,6 @@ module mips_cpu
 
 	//mux to choose address to write to for jal op
 	mux5 jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr);
-
-	//memory register module
-	reg32 memory_data_reg(mem_data, mem_data_out);
 
 	//sign extending module
 	sign_extender immediate_extender(inst_3, extended_immediate); //included
