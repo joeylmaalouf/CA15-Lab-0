@@ -9,7 +9,7 @@
 module mips_cpu();
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
 				jumped_pc, mem_data, mem_data_out, extended_immediate, shifted_extended_immediate, b,
-				normal_pc, pc_jump_addr;
+				normal_pc, pc_jump_addr, read_1, read_2, normal_write_data;
 	wire[31:26] op;
 	wire[25:21] inst_1;
 	wire[25:0] jump_instruction_addr;
@@ -22,7 +22,7 @@ module mips_cpu();
 	wire[2:0] alu_op;
 	wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
 		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr;
-		 
+
 	//Control Module
 	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
 
