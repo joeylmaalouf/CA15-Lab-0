@@ -35,8 +35,7 @@ input Clk
 	mux2 bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose); //checked
 
 	//PC register
-	//Checked for completeness
-	register32 PC(next_instruction_addr, instruction_addr); //in progress
+	register32 PC(instruction_addr, next_instruction_addr, 1`b1, Clk); //checked
 
 	//PC incrementer
 	bitwiseADD pc_incrementer(instruction_addr_plus4, overflow, instruction_addr, 32'd4, 1'b0); //checked
