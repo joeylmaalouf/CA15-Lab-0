@@ -57,3 +57,17 @@ We made a signed sign extender designed to take in immediates and output the sig
 ## Performance analysis
 
 ## Work Plan Reflection
+| Task                    | Estimated Time to Complete | Actual Time Elapsed       |
+|-------------------------|----------------------------|---------------------------|
+| create assembly tests   | 2 hours                    | 1 hour                    |
+| test/fix up old modules | 5 hours                    | 6 hours                   |
+| design processor base   | 8 hours                    | 6 hours                   |
+| LW, SW instr            | 1.5 hours                  | 30 minutes                |
+| J, JR instr             | 1.5 hours                  | 30 minutes                |
+| JAL, BNE instr          | 1.5 hours                  | 30 minutes                |
+| XORI instr              | 1.5 hours                  | 30 minutes                |
+| ADD, SUB instr          | 1.5 hours                  | 30 minutes                |
+| SLT instr               | 1.5 hours                  | 30 minutes                |
+| fit everything together | 4 hours                    | 10 hours                  |
+
+In a lot of regards we were almost right in our expected times, but we did get hung up on a few areas we didn't expect. We hahd anticipated fitting everything together being a difficult task, but actually making the CPU work has proved a tremendous road block. Fixing old modules was something we knew would take time, and we were about right in our estimate. We also had to write new modules that did things a little differently from past implementations, so we went a little over what we anticipated. Getting the instructions together took much less time than we anticipated. Designing the processor base was less intensive than expected, but still took a sizable chunk of time. Being sure the main cpu file talked to the other modules correctly was a lesson in being thorough. Additionally, making sure the port sizes were correct was far more of a trial than anticipated.
