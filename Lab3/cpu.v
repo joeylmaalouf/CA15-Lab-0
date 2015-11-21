@@ -30,7 +30,7 @@ module mips_cpu
 		 //carryout and overflow do nothing. We just need them for the ALU
 
 	//Control Module
-	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
+	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override); //checked
 
 	//2:1 mux
 	//ties pc_chooser mux directly to zero flag of ALU for use in BNE operations
