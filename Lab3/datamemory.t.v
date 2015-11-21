@@ -11,12 +11,23 @@ module DataMemoryTest();
   initial clk = 0;
   always #10 clk = !clk;
   initial begin
-    dIn = 5;
-    writeEn = 1;
     readEn = 1;
-    writeAddr = 0;
+    writeEn = 1;
     readAddr = 0;
-    #31
-    $display("%d", dOut);
+    writeAddr = 0;
+    dIn = 5;
+    #40
+    $display("Stored %d at   %x", dIn, writeAddr);
+    $display("Read   %d from %x", dOut, readAddr);
+    readAddr = 1;
+    writeAddr = 1;
+    dIn = 8;
+    #40
+    $display("Stored %d at   %x", dIn, writeAddr);
+    $display("Read   %d from %x", dOut, readAddr);
+    readAddr = 0;
+    writeEn = 0;
+    #40
+    $display("Read   %d from %x", dOut, readAddr);
   end
 endmodule
