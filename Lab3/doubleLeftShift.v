@@ -1,11 +1,10 @@
-module doubleLeftShift(d, q, enable)
-    input[31:0] d;
-    reg[31:0]   q;
-    input       enable;
-    wire[31:0]  d;
-    reg[31:0]   q;
-    wire        enable;
-    always @(d) begin
+module doubleLeftShift(    
+    input reg[25:0]        d,
+    output reg[27:0]   q,
+    input              enable,
+    input	       clk
+);
+    always @(posedge clk) begin
 	if (enable) begin
 	    q = d << 2;
         end
