@@ -3,14 +3,15 @@
 `include "control_module.v"
 `include "mux.v"
 `include "doubleLeftShift.v"
-`include "signExtendu.v"
 `include "signExtends.v"
 `include "regfile.v"
+`include "register32.v"
 `include "datamemory.v"
 `include "instrmemory.v"
 module mips_cpu
 (
-  input clk
+  input clk,
+  output error_code
 );
   wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
              jumped_pc, extended_immediate, shifted_extended_immediate, b,
@@ -26,6 +27,7 @@ module mips_cpu
   wire[15:0] imm;
   wire[4:0] write_addr;
   wire[2:0] alu_op;
+  wire[4:0] tmp;
   wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
        pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, overflow, carryout;
 
@@ -71,13 +73,13 @@ module mips_cpu
   mux #(5) jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr);
 
   // sign extending module
-  sign_extender immediate_extender(inst_3, clk, extended_immediate);
+  signExtends immediate_extender(inst_3, clk, extended_immediate);
 
   // shift left by 2'er module
   doubleLeftShift immediate_shifter(extended_immediate, shifted_extended_immediate, 1, clk);
 
   // operational register module
-  // async_register register(read_1_addr, read_2_addr, write_addr, write_data, write_enable, read_1, read_2);
+  // async_register register(read_1, read_2, write_data, read_addr_1, read_addr_2, write_addr, write_enable, clk);
   regfile register(read_1, read_2, write_data, rs, rt, write_addr, write_enable, clk);
 
   // alu source mux
@@ -97,4 +99,12 @@ module mips_cpu
   // optionally forces register to write PC+4 to whatever address
   // useful for jal operations
   mux #(32) jal_data_mux(normal_write_data, instruction_addr_plus4, jal_reg_override, write_data);
+
+  @always @(posedge clk) begin
+    tmp = rs;
+    rs = 2;
+    #10
+    error_code = read_1;
+    rs = tmp;
+  end
 endmodule
