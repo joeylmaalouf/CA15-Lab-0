@@ -43,10 +43,10 @@ module mips_cpu
   register32 PC(instruction_addr, next_instruction_addr, 1'b1, clk);
 
   // PC incrementer
-  adder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4)
+  adder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4);
 
   // PC adder
-  adder pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate)
+  adder pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
 
   // PC chooser
   mux #(32) pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc);
