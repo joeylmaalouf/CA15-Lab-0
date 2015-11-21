@@ -26,7 +26,8 @@ module mips_cpu
 	wire[4:0] write_addr;
 	wire[2:0] alu_op;
 	wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
-		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, overflow;
+		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, overflow, carryout;
+		 //carryout and overflow do nothing. We just need them for the ALU
 
 	//Control Module
 	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
@@ -83,7 +84,7 @@ module mips_cpu
 
 	//alu module
 	//alu ALU(a, b, alu_res, zero_flag);
-	alu ALU(read_1, b, alu_res, zero_flag, alu_op); //included 
+	alu ALU(alu_res, carryout, zero_flag, overflow, read_1, b, alu_op); //checked
 
 	//data memory module
 	//data_memory data_mem(clk, mem_read_addr, mem_write_addr, mem_read_enable, mem_write_enable, mem_write_data_in, mem_read_data_out);
