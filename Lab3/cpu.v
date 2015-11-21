@@ -1,14 +1,16 @@
 `include "alu.v"
-`include "arithmatic.v"
+`include "arithmetic.v"
 `include "control_module.v"
-`include "mux.v" //  contains all muxs
+`include "mux.v" //  contains all muxes
 `include "doubleLeftShift.v" // shift left by 2
 `include "signExtendu.v" //sign extend unsigned
 `include "signExtens.v" //sign extend signed
 `include "regfile.v" //register file
+`include "datamemory.v"
+`include "instrmemory.v"
 module mips_cpu
 (
-input Clk
+  input clk
 );
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
 				jumped_pc, mem_data, mem_data_out, extended_immediate, shifted_extended_immediate, b,
@@ -35,7 +37,7 @@ input Clk
 	mux2 bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose); //checked
 
 	//PC register
-	register32 PC(instruction_addr, next_instruction_addr, 1`b1, Clk); //checked
+	register32 PC(instruction_addr, next_instruction_addr, 1`b1, clk); //checked
 
 	//PC incrementer
 	bitwiseADD pc_incrementer(instruction_addr_plus4, overflow, instruction_addr, 32'd4, 1'b0); //checked
@@ -88,7 +90,7 @@ input Clk
 
 	//data memory module
 	//data_memory data_mem(clk, mem_read_addr, mem_write_addr, mem_read_enable, mem_write_enable, mem_write_data_in, mem_read_data_out);
-	data_memory data_mem(clk, alu_res, alu_res, mem_read_enable, mem_write_enable, read_2, mem_read);
+	datamemory data_mem(clk, alu_res, alu_res, mem_read_enable, mem_write_enable, read_2, mem_read); //checked
 
 	//memory to register mux
 	mux32 mem_to_reg_mux(alu_res, mem_read, mem_to_reg, normal_write_data); //included
