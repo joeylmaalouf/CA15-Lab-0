@@ -32,7 +32,7 @@ module mux5(
 	end
 endmodule
 
-module mux(
+module mux2(
 	input a,
 	input b,
 	input selector,
