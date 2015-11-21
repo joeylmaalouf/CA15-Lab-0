@@ -8,7 +8,6 @@ module register32
   always @(posedge clk) begin
     if (wrenable) begin
       q = d;
-      $display("%b => %b", d, q);
     end
   end
 endmodule

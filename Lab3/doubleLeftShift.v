@@ -22,7 +22,6 @@ module leftShift32
     always @(posedge clk) begin
         if (enable) begin
             q = d << shift;
-            $display("%b << %d = %b", d, shift, q);
         end
     end
 endmodule

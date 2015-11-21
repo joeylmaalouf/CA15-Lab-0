@@ -14,7 +14,8 @@ module mips_cpu
   input clk,
   output reg[31:0] error_code
 );
-  wire[31:0] mem_read, alu_res, instruction_addr, next_instruction_addr, instruction_addr_plus4, instruction_addr_plus_immediate,
+  wire[31:0] instruction_addr = 32'b0;
+  wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr_plus4, instruction_addr_plus_immediate,
              jumped_pc, extended_immediate, shifted_extended_immediate, b,
              normal_pc, pc_jump_addr, read_1, read_2, normal_write_data, write_data;
   wire[31:26] op;
@@ -32,15 +33,12 @@ module mips_cpu
   wire reg_dest, alu_src, zero_flag, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
        pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, carryout;
 
-
-  leftShift32 #(32) initialize_instr_addr(instruction_addr, instruction_addr, 1'b1, clk);
-
   // control Module
   control_module cpu_control(op, func, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
 
   // 2:1 mux
   // ties pc_chooser mux directly to zero flag of ALU for use in BNE operations
-  // input 0, input 1, choice, output
+  // input 0, input 1, selector, output
   mux #(1) bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
   // PC register
@@ -69,7 +67,6 @@ module mips_cpu
   instrmemory instruction_memory(instruction_addr, op, rs, rt, rd, shft, func, imm, jump_instruction_addr);
 
   // instruction register destination mux
-  // choice 1, choice 2, selector, output
   mux #(5) reg_dest_mux(rt, rd, reg_dest, normal_write_addr);
 
   // mux to choose address to write to for jal op
@@ -82,7 +79,7 @@ module mips_cpu
   leftShift32 #(2) immediate_shifter(extended_immediate, shifted_extended_immediate, 1'b1, clk);
 
   // mux selector for error output
-  mux #(5) rs_mux(rs, 5'd2, error_mux_select, rs);
+  //mux #(5) rs_mux(rs, 5'd2, error_mux_select, rs);
 
   // operational register module
   // async_register register(read_1, read_2, write_data, read_addr_1, read_addr_2, write_addr, write_enable, clk);
