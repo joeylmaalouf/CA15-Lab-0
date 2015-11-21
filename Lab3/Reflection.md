@@ -8,6 +8,8 @@ The easiest way to review our design is to step thorugh running a command on the
 
 Any function that requires registers has those broken out by the instruction memory/decoder, and sent to the adress inputs of the register. An immediate will be sent to the immediate extenter, which extends it to the propper number of bits to perform arithmatic on. The ALU can take in either two register values, or the mux can select an immediate, allowing us to use either of those - and it has a zero flag, which it can output if something is equal to zero, for branching. Finally, the last block is data memory, which can take 
 
+I added two multiplexer cut-ins to accomodate modified datapaths for JAL and BNE instructions. For BNE instructions, the pc_chooser mux's selector signal is sourced from the zero flag of the ALU since the zero flag will indicate equality in the two values being compared. For JAL operations, hard-coded values are used for the write address of the register since the $ra is always register 31. Additionally the current PC address plus 4 is written to the register instead of the output of the mem_to_reg mux.
+
 ## Test Plan
 
 ###MARS assembly Tests
