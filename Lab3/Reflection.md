@@ -8,6 +8,50 @@ Any function that requires registers has those broken out by the instruction mem
 
 ## Test Plan
 
+###MARS assmebly Tests
+We set up a series of tests to prove the core functionality of our cpu works. It tested load word, store word, jump, jump register, jump and link, branch not equal, exclusive or immediate, add, subtract, and check if less than. 
+
+#### Expected Test Results
+* `$v0 == 0` means everything passed
+* `$v0 == 1` means LW/SW failed
+* `$v0 == 2` means J failed
+* `$v0 == 3` means JR/JAL failed
+* `$v0 == 4` means BNE failed
+* `$v0 == 5` means XORI failed
+* `$v0 == 6` means ADD failed
+* `$v0 == 7` means SUB failed
+* `$v0 == 8` means SLT failed
+
+#### Memory Layout Requirements
+None, but if testing in Mars, make sure to go to `Settings -> Memory Configuration... -> Compact, Text at Address 0 -> Apply and Close`
+
+#### Non-Subset Instructions Used
+None
+
+###ModelSim test bench
+
+We wrote a large number of test benches to ensure the functionality of the core components of the CPU. 
+Concatenator:
+We set the concatenator to take four bits of the most significant bits of a mock PC address and told it to concatenate with a jump instruction, to make a 32-bit usable address. We expected this to start with a 4-bit and a 28-bit signal and end with a 32-bit signal with the leading significant bits being the 4-bit.
+
+CPU:
+We made a test bench to throw everything together and make the CPU work. We experienced great difficulty attempting to start the CPU and get it to contain anything but undriven wires. We expected to get a zero value on an error flag, meaning the CPU ran without a problem. Results pending.
+
+Data Memory:
+We set up the data memory file to be given a variety of information with the addresses to store them, and we expected to find the data where we told the data memory to store it. We successfully found the correct data in the correct location.
+
+Double Left Shift:
+We set up the left shifter to take in a 26-bit input and shift it to the left while extending it to a 28-bit output. We gave it a binary number to be shifted, and found that it successfully extended the size of the output as well as shifting the appropriate number of spaces.
+
+Instruction Memory:
+We set up a test bench to test the ability of the instruction memory to decode instructions into their respective parts. We gave the test bench a full instruction with the expectation it would divide it into its core parts. It performed exactly as planned.
+
+Mux:
+We set up a mux that could take any size input and output a choice based on the controls. We  gave it a variety of options for it to choose between based on a control input, and found it performed as expected every time.
+
+Sign Extender:
+We made a signed sign extender designed to take in immediates and output the sign extended version, bearing the sign in mind. We expected it to extend inputs to the appropriate number of bits through sign extension, and found it performed to expectations every time.
+
 ## Performance analysis
 
 ## Work Plan Reflection
