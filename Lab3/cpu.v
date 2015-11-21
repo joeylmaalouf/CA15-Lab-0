@@ -76,7 +76,7 @@ module mips_cpu
 
 	//operational register module
 	//async_register register(read_1_addr, read_2_addr, write_addr, write_data, write_enable, read_1, read_2);
-	regfile register(inst_1, inst_2, write_addr, write_data, write_enable, read_1, read_2);
+	regfile register(read_1, read_2, write_data, inst_1, inst_2, write_addr, write_enable, clk); //checked
 
 	//alu source mux
 	mux32 alu_src_mux(b, read_2, extended_immediate, alu_src); //included
