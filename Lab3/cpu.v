@@ -5,7 +5,7 @@
 `include "mux.v"
 `include "doubleLeftShift.v"
 `include "signExtends.v"
-`include "regfile.v"
+`include "registerfile.v"
 `include "register32.v"
 `include "datamemory.v"
 `include "instrmemory.v"
@@ -16,9 +16,11 @@ module mips_cpu
 );
   wire[31:0] instruction_addr = 32'd0;
   wire[31:0] next_instruction_addr = 32'd4;
+  wire[31:0] write_data = 32'd0;
+  wire[31:0] normal_write_data = 32'd0;
   wire[31:0] mem_read, alu_res, instruction_addr_plus4, instruction_addr_plus_immediate,
              jumped_pc, extended_immediate, shifted_extended_immediate, b,
-             normal_pc, pc_jump_addr, read_1, read_2, normal_write_data, write_data;
+             normal_pc, pc_jump_addr, read_1, read_2;
   wire[31:26] op;
   wire[25:21] rs;
   wire[25:0] jump_instruction_addr;
@@ -31,13 +33,12 @@ module mips_cpu
   wire[4:0] write_addr, normal_write_addr;
   wire[2:0] alu_op;
   reg error_mux_select;
-  wire reg_dest, alu_src, zero_flag, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
+  wire reg_dest, alu_src, zero_flag,reg_write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
        pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, carryout;
 
-  // control Module
-  control_module cpu_control(op, func, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
+  // control module
+  control_module cpu_control(op, func, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, reg_write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
 
-  // 2:1 mux
   // ties pc_chooser mux directly to zero flag of ALU for use in BNE operations
   // input 0, input 1, selector, output
   mux #(1) bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
@@ -84,7 +85,7 @@ module mips_cpu
 
   // operational register module
   // async_register register(read_1, read_2, write_data, read_addr_1, read_addr_2, write_addr, write_enable, clk);
-  regfile register(read_1, read_2, write_data, rs, rt, write_addr, write_enable, clk);
+  registerfile register(read_1, read_2, write_data, rs, rt, write_addr, reg_write_enable, clk);
 
   // alu source mux
   mux #(32) alu_src_mux(read_2, extended_immediate, alu_src, b);

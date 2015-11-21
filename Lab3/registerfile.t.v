@@ -1,5 +1,5 @@
-`include "regfile.v"
-module regfiletest();
+`include "registerfile.v"
+module registerfiletest();
   wire[31:0] ReadData1;    // Data from first register read
   wire[31:0] ReadData2;    // Data from second register read
   reg[31:0] WriteData;     // Data to write to register
@@ -8,15 +8,15 @@ module regfiletest();
   reg[4:0] WriteRegister; // Address of register to write
   reg RegWrite;           // Enable writing of register when High
   reg Clk;                // Clock (Positive Edge Triggered)
-  regfile DUT(
-    .ReadData1(ReadData1),
-    .ReadData2(ReadData2),
-    .WriteData(WriteData),
-    .ReadRegister1(ReadRegister1),
-    .ReadRegister2(ReadRegister2),
-    .WriteRegister(WriteRegister),
-    .RegWrite(RegWrite),
-    .Clk(Clk)
+  registerfile DUT(
+    .read_data_1(ReadData1),
+    .read_data_2(ReadData2),
+    .write_data(WriteData),
+    .read_address_1(ReadRegister1),
+    .read_address_2(ReadRegister2),
+    .write_address(WriteRegister),
+    .write_enable(RegWrite),
+    .clk(Clk)
   );
   initial Clk = 0;
   always #10 Clk = !Clk;

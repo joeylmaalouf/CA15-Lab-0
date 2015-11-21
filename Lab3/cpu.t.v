@@ -9,6 +9,6 @@ module CPUTest();
   initial clk = 0;
   always #10 clk = !clk;
   always @(error_code) begin
-    $display("%d", error_code);
+    $display("Error code: %d", error_code);
   end
 endmodule
