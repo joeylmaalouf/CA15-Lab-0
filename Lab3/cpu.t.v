@@ -1,8 +1,8 @@
 `include "cpu.v"
 module CPUTest();
-  wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
-  		jumped_pc, extended_immediate, shifted_extended_immediate, b,
-  		normal_pc, pc_jump_addr, read_1, read_2, normal_write_data;
+  wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4,
+             jumped_pc, extended_immediate, shifted_extended_immediate, b,
+             normal_pc, pc_jump_addr, read_1, read_2, normal_write_data;
   wire[31:26] op;
   wire[25:21] inst_1;
   wire[25:0] jump_instruction_addr;
@@ -13,8 +13,8 @@ module CPUTest();
   wire[5:0] inst_funct;
   wire[4:0] write_addr;
   wire[2:0] alu_op;
-  wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
-		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, overflow;  
+  wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg,
+       pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, overflow;
   reg clk;
   mips_cpu dut(
 	.clk(clk),
@@ -59,7 +59,6 @@ module CPUTest();
 	.write_addr(write_addr),
 	.alu_op(alu_op),
 );
-  
 
   initial clk = 0;
   always #10 clk = !clk;
