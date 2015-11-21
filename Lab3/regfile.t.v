@@ -27,6 +27,7 @@ module regfiletest();
     #20
     $display("Wrote %b to %b.", WriteData, WriteRegister);
     ReadRegister1 = 5'b01111;
+    #20
     $display("Read %b from %b.", ReadData1, ReadRegister1);
   end
 endmodule
