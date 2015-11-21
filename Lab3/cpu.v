@@ -1,7 +1,7 @@
 `include "alu.v"
 `include "arithmatic.v"
 `include "control_module.v"
-`include "mux.v" //  32:1 mux
+`include "mux.v" //  contains all muxs
 `include "doubleLeftShift.v" // shift left by 2
 `include "signExtendu.v" //sign extend unsigned
 `include "signExtens.v" //sign extend signed
@@ -29,9 +29,9 @@ input Clk
 	//Control Module
 	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
 
-	//1-bit mux
+	//2:1 mux
 	//ties pc_chooser mux directly to zero flag of ALU for use in BNE operations
-	mux bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
+	mux2 bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
 	//PC register
 	//Checked for completeness
