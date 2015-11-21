@@ -10,7 +10,7 @@ Any function that requires registers has those broken out by the instruction mem
 
 ## Test Plan
 
-###MARS assmebly Tests
+###MARS assembly Tests
 We set up a series of tests to prove the core functionality of our cpu works. It tested load word, store word, jump, jump register, jump and link, branch not equal, exclusive or immediate, add, subtract, and check if less than. 
 
 #### Expected Test Results
