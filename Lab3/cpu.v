@@ -79,7 +79,7 @@ module mips_cpu
   leftShift32 #(2) immediate_shifter(extended_immediate, shifted_extended_immediate, 1'b1, clk);
 
   // mux selector for error output
-  //mux #(5) rs_mux(rs, 5'd2, error_mux_select, rs);
+  mux #(5) rs_mux(rs, 5'd2, error_mux_select, rs);
 
   // operational register module
   // async_register register(read_1, read_2, write_data, read_addr_1, read_addr_2, write_addr, write_enable, clk);
