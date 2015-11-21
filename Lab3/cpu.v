@@ -72,7 +72,7 @@ module mips_cpu
 	mux #(5) jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr); //checked
 
 	//sign extending module
-	sign_extender immediate_extender(inst_3, extended_immediate); //included
+	sign_extender immediate_extender(inst_3, clk, extended_immediate); //checked
 
 	//shift left by 2'er module
 	doubleLeftShift immediate_shifter(extended_immediate, shifted_extended_immediate, 1, clk); //checked
