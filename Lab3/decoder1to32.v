@@ -5,4 +5,9 @@ module decoder1to32
   input[4:0]   address
 );
   assign out = enable << address; 
+  always @(address) begin
+    if (enable) begin
+      $display("%b", out);
+    end
+  end
 endmodule

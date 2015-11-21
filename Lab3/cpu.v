@@ -14,8 +14,9 @@ module mips_cpu
   input clk,
   output reg[31:0] error_code
 );
-  wire[31:0] instruction_addr = 32'b0;
-  wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr_plus4, instruction_addr_plus_immediate,
+  wire[31:0] instruction_addr = 32'd0;
+  wire[31:0] next_instruction_addr = 32'd4;
+  wire[31:0] mem_read, alu_res, instruction_addr_plus4, instruction_addr_plus_immediate,
              jumped_pc, extended_immediate, shifted_extended_immediate, b,
              normal_pc, pc_jump_addr, read_1, read_2, normal_write_data, write_data;
   wire[31:26] op;
@@ -42,7 +43,7 @@ module mips_cpu
   mux #(1) bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
   // PC register
-  register32 PC(instruction_addr, next_instruction_addr, 1'b1, clk);
+  //register32 PC(instruction_addr, next_instruction_addr, 1'b0, clk);
 
   // PC incrementer
   adder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4);
@@ -79,7 +80,7 @@ module mips_cpu
   leftShift32 #(2) immediate_shifter(extended_immediate, shifted_extended_immediate, 1'b1, clk);
 
   // mux selector for error output
-  mux #(5) rs_mux(rs, 5'd2, error_mux_select, rs);
+  // mux #(5) rs_mux(rs, 5'd2, error_mux_select, rs); // figure out why this sets rs from 00 to 0X
 
   // operational register module
   // async_register register(read_1, read_2, write_data, read_addr_1, read_addr_2, write_addr, write_enable, clk);

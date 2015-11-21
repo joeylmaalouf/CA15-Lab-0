@@ -16,7 +16,7 @@ module instrmemory(
   always @(addr) begin
     address = addr / 4;
     instr = mem[address[6:0]];
-    // $display("New instruction: %x = %b", instr, instr);
+    $display("New instruction: %x = %b", instr, instr);
     op = instr[31:26];
     rs = instr[25:21];
     rt = instr[20:16];
