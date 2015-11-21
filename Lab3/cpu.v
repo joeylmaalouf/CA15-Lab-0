@@ -46,10 +46,10 @@ module mips_cpu
 	bitwiseADD pc_jumper(instruction_addr_plus_immediate, overflow, instruction_addr_plus4, shifted_extended_immediate, 1'b0); //checked
 
 	//PC chooser
-	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc);
+	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc); //checked
 
 	//PC Jumper
-	mux32 jump_mux(normal_pc, pc_jump_addr, jump_enable, next_instruction_addr);
+	mux32 jump_mux(normal_pc, pc_jump_addr, jump_enable, next_instruction_addr); //checked
 
 	//Take address from instruction and shift left by 2
 	shift_by_two jump_shifter(jump_instruction_addr, jump_instruction_addr_shifted);
