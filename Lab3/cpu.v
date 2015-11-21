@@ -43,7 +43,7 @@ module mips_cpu
 	bitwiseADD pc_incrementer(instruction_addr_plus4, overflow, instruction_addr, 32'd4, 1'b0); //checked
 
 	//PC adder
-	bitwiseADD pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
+	bitwiseADD pc_jumper(instruction_addr_plus_immediate, overflow, instruction_addr_plus4, shifted_extended_immediate, 1'b0); //checked
 
 	//PC chooser
 	mux32 pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc);
