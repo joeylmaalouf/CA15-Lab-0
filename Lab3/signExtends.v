@@ -1,6 +1,6 @@
 module signExtends( //sign extend signed, for use with 2's compliment
-  input reg[15:0] d,
-  input reg clk,
+  input[15:0]      d,
+  input            clk,
   output reg[31:0] q
 );
   always @(posedge clk) begin
