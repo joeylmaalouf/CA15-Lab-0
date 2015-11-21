@@ -14,10 +14,11 @@ module CPUTest();
   wire[4:0] write_addr;
   wire[2:0] alu_op;
   wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
-		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr;  
+		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, overflow;  
   reg clk;
   mips_cpu dut(
 	.clk(clk),
+	.overflow(overflow),
 	.mem_read(mem_read),
 	.reg_dest(reg_dest),
 	.alu_src(alu_src),

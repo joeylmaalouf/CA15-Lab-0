@@ -24,7 +24,7 @@ input Clk
 	wire[4:0] write_addr;
 	wire[2:0] alu_op;
 	wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
-		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr;
+		 pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, overflow;
 
 	//Control Module
 	cpu_control control_module(op, inst_funct, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
@@ -39,7 +39,7 @@ input Clk
 	register32 PC(next_instruction_addr, instruction_addr); //in progress
 
 	//PC incrementer
-	bitwiseAdd pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4);
+	bitwiseAdd pc_incrementer(instruction_addr_plus4, overflow, instruction_addr, 32'd4, 1'b0);
 
 	//PC adder
 	bitwiseAdd pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);

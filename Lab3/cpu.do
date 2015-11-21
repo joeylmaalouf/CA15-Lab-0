@@ -41,6 +41,7 @@ sim:/CPUTest/jal_reg_override \
 sim:/CPUTest/normal_write_addr \
 sim:/CPUTest/read_1 \
 sim:/CPUTest/read_2 \
+sim:/CPUTest/overflow \
 sim:/CPUTest/normal_write_data 
 run -all
 
