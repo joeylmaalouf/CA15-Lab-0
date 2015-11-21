@@ -1,3 +1,5 @@
+[MIPS Instruction Formats](https://en.wikibooks.org/wiki/MIPS_Assembly/Instruction_Formats)
+
 [Single-Cycle CPU](http://courses.cs.washington.edu/courses/cse378/09wi/lectures/lec08.pdf)
 
 [Single-Cycle CPU](http://www.cs.columbia.edu/~sedwards/classes/2012/3827-fall/mips-uarch.pdf)
