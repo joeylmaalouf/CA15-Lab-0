@@ -31,7 +31,8 @@ input Clk
 
 	//2:1 mux
 	//ties pc_chooser mux directly to zero flag of ALU for use in BNE operations
-	mux2 bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
+	// input 0, input 1, choice, output
+	mux2 bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose); //checked
 
 	//PC register
 	//Checked for completeness
