@@ -1,6 +1,6 @@
 `include "instrmemory.v"
 module InstrMemoryTest();
-  reg[6:0]      addr;
+  reg[31:0]     addr;
   output[31:26] op;
   output[25:21] rs;
   output[20:16] rt;
@@ -12,7 +12,7 @@ module InstrMemoryTest();
   instrmemory dut(addr, op, rs, rt, rd, shft, func, imm, target);
   initial begin
     $display("Reading instruction memory:");
-    for (addr = 7'd0; addr < 7'd100; addr = addr + 1) begin
+    for (addr = 32'd0; addr < 32'd400; addr = addr + 4) begin
       #1
       $display("instr%d:", addr);
       $display("  R: %b,%b,%b,%b,%b,%b", op, rs, rt, rd, shft, func);

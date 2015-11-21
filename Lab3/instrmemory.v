@@ -11,10 +11,12 @@ module instrmemory(
 );
   reg[31:0] mem[99:0];
   reg[31:0] instr;
+  reg[31:0] address;
   initial $readmemh("tests.dat", mem);
   always @(addr) begin
-    instr = mem[addr[6:0]];
-    $display("New instruction: %b", instr);
+    address = addr / 4;
+    instr = mem[address[6:0]];
+    // $display("New instruction: %x = %b", instr, instr);
     op = instr[31:26];
     rs = instr[25:21];
     rt = instr[20:16];
