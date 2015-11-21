@@ -1,17 +1,19 @@
-module datamemory(clk, regWE, Addr, DataIn, DataOut);
-  input clk, regWE;
-  input[9:0] Addr;
-  input[31:0] DataIn;
-  output[31:0]  DataOut;
-
-  reg [31:0] mem[16383:0];  
+module datamemory(
+  input        clk,
+  input[13:0]  readAddr,
+  input[13:0]  writeAddr,
+  input        readEn,
+  input        writeEn,
+  input[31:0]  dIn,
+  output[31:0] dOut
+);
+  reg[31:0] mem[16383:0];
   always @(posedge clk) begin
-    if (regWE) begin
-      mem[Addr] <= DataIn;
+    if (writeEn) begin
+      mem[writeAddr] <= dIn;
+    end
+    if (readEn) begin
+      dOut <= mem[readAddr];
     end
   end
-
-  initial $readmemh(tests.dat”, mem);
-
-  assign DataOut = mem[Addr];
 endmodule

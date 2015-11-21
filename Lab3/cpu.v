@@ -39,7 +39,7 @@ input Clk
 	register32 PC(next_instruction_addr, instruction_addr); //in progress
 
 	//PC incrementer
-	bitwiseAdder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'b00000000000000000000000000000100);
+	bitwiseAdder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4);
 
 	//PC adder
 	bitwiseAdder pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate);
@@ -88,8 +88,8 @@ input Clk
 	alu ALU(read_1, b, alu_res, zero_flag, alu_op); //included 
 
 	//data memory module
-	//data_memory data_mem(mem_read_addr, mem_write_addr, mem_write_data, mem_read, mem_write_enable, mem_read_enable);
-	data_memory data_mem(alu_res, alu_res, read_2, mem_read, mem_write_enable, mem_read_enable);
+	//data_memory data_mem(clk, mem_read_addr, mem_write_addr, mem_read_enable, mem_write_enable, mem_write_data_in, mem_read_data_out);
+	data_memory data_mem(clk, alu_res, alu_res, mem_read_enable, mem_write_enable, read_2, mem_read);
 
 	//memory to register mux
 	mux32 mem_to_reg_mux(alu_res, mem_read, mem_to_reg, normal_write_data); //included
