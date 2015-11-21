@@ -1,15 +1,15 @@
 vlog -reportprogress 300 -work work regfile.t.v
-vsim -voptargs="+acc" regfileTest
+vsim -voptargs="+acc" regfiletest
 
 add wave -position insertpoint  \
-sim:/regfileTest/Clk \
-sim:/regfileTest/ReadData1 \
-sim:/regfileTest/ReadData2 \
-sim:/regfileTest/ReadRegister1 \
-sim:/regfileTest/ReadRegister2 \
-sim:/regfileTest/WriteRegister \
-sim:/regfileTest/RegWrite \
-sim:/regfileTest/WriteData
+sim:/regfiletest/Clk \
+sim:/regfiletest/ReadData1 \
+sim:/regfiletest/ReadData2 \
+sim:/regfiletest/ReadRegister1 \
+sim:/regfiletest/ReadRegister2 \
+sim:/regfiletest/WriteRegister \
+sim:/regfiletest/RegWrite \
+sim:/regfiletest/WriteData
 run -all
 
 wave zoom full
