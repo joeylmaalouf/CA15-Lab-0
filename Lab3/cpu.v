@@ -6,7 +6,10 @@
 `include "signExtendu.v" //sign extend unsigned
 `include "signExtens.v" //sign extend signed
 `include "regfile.v" //register file
-module mips_cpu();
+module mips_cpu
+(
+input Clk
+);
 	wire[31:0] mem_read, alu_res, next_instruction_addr, instruction_addr, instruction_addr_plus4, 
 				jumped_pc, mem_data, mem_data_out, extended_immediate, shifted_extended_immediate, b,
 				normal_pc, pc_jump_addr, read_1, read_2, normal_write_data;
@@ -31,7 +34,8 @@ module mips_cpu();
 	mux bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
 	//PC register
-	reg32 PC(next_instruction_addr, instruction_addr);
+	//Checked for completeness
+	register32 PC(next_instruction_addr, instruction_addr);
 
 	//PC incrementer
 	bitwiseAdder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'b00000000000000000000000000000100);
@@ -63,7 +67,6 @@ module mips_cpu();
 	mux5 jal_reg_mux(normal_write_addr, 5'd31, jal_reg_override, write_addr);
 
 	//memory register module
-	//Needs fixin
 	reg32 memory_data_reg(mem_data, mem_data_out);
 
 	//sign extending module

@@ -31,3 +31,20 @@ module mux5(
 		end
 	end
 endmodule
+
+module mux(
+	input a,
+	input b,
+	input selector,
+	output c
+);
+
+	always@(a or b or selector) begin
+		if (selector == 0) begin
+			c = a;
+		end
+		else if (selector == 1) begin
+			c = b;
+		end
+	end
+endmodule
