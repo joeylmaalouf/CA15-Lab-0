@@ -36,7 +36,7 @@ input Clk
 
 	//PC register
 	//Checked for completeness
-	register32 PC(next_instruction_addr, instruction_addr);
+	register32 PC(next_instruction_addr, instruction_addr); //in progress
 
 	//PC incrementer
 	bitwiseAdder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'b00000000000000000000000000000100);
