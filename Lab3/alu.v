@@ -1,4 +1,4 @@
-`include "logic.v"
+//`include "logic.v"
 `include "arithmetic.v"
 
 `define ADD  3'd0

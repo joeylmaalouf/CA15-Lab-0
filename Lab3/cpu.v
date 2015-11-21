@@ -1,5 +1,5 @@
 `include "alu.v"
-`include "arithmetic.v"
+`include "adder.v"
 `include "control_module.v"
 `include "mux.v"
 `include "doubleLeftShift.v"
@@ -29,7 +29,7 @@ module mips_cpu
   wire[2:0] alu_op;
   wire[4:0] tmp;
   wire reg_dest, alu_src, zero_flag, alu_op, write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
-       pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, overflow, carryout;
+       pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, normal_write_addr, carryout;
 
   // control Module
   cpu_control control_module(op, func, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
@@ -40,13 +40,13 @@ module mips_cpu
   mux #(2) bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
   // PC register
-  register32 PC(instruction_addr, next_instruction_addr, 1`b1, clk);
+  register32 PC(instruction_addr, next_instruction_addr, 1'b1, clk);
 
   // PC incrementer
-  bitwiseADD pc_incrementer(instruction_addr_plus4, overflow, instruction_addr, 32'd4, 1'b0);
+  adder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4)
 
   // PC adder
-  bitwiseADD pc_jumper(instruction_addr_plus_immediate, overflow, instruction_addr_plus4, shifted_extended_immediate, 1'b0);
+  adder pc_jumper(instruction_addr_plus_immediate, instruction_addr_plus4, shifted_extended_immediate)
 
   // PC chooser
   mux #(32) pc_chooser(instruction_addr_plus4, instruction_addr_plus_immediate, pc_choose, normal_pc);
