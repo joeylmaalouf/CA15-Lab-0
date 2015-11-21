@@ -5,7 +5,7 @@ module datamemory(
   input        readEn,
   input        writeEn,
   input[31:0]  dIn,
-  output[31:0] dOut
+  output reg[31:0] dOut
 );
   reg[31:0] mem[16383:0];
   always @(posedge clk) begin
