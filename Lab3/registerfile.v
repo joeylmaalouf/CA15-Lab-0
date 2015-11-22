@@ -11,6 +11,7 @@ module registerfile(
   reg[31:0] registers[31:0];
   initial begin
     registers[5'd0] = 32'b0;
+    registers[5'd29] = 32'h3ffc;
   end
   always @(posedge clk) begin
     if (write_enable && (write_address > 0)) begin
