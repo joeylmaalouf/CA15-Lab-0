@@ -16,8 +16,8 @@ module mips_cpu
 );
   wire[31:0] instruction_addr = 32'd0;
   wire[31:0] next_instruction_addr = 32'd4;
-  wire[31:0] write_data = 32'd0;
-  wire[31:0] normal_write_data = 32'd0;
+  wire[31:0] write_data;
+  wire[31:0] normal_write_data;
   wire[31:0] mem_read, alu_res, instruction_addr_plus4, instruction_addr_plus_immediate,
              jumped_pc, extended_immediate, shifted_extended_immediate, b,
              normal_pc, pc_jump_addr, read_1, read_2;
@@ -44,7 +44,7 @@ module mips_cpu
   mux #(1) bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
   // PC register
-  //register32 PC(instruction_addr, next_instruction_addr, 1'b0, clk);
+  // register32 PC(instruction_addr, next_instruction_addr, 1'b0, clk);
 
   // PC incrementer
   adder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4);
