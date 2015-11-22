@@ -56,7 +56,23 @@ We set up a mux that could take any size input and output a choice based on the 
 Sign Extender:
 We made a signed sign extender designed to take in immediates and output the sign extended version, bearing the sign in mind. We expected it to extend inputs to the appropriate number of bits through sign extension, and found it performed to expectations every time.
 
-## Performance analysis
+## Performance Analysis - ALU Edition
+
+This analysis was based on the assumption that our basic gates were NAND, NOR, and NOT gates, that scale linearly with the number of inputs (10*inputs). 
+
+| Element  | Cost                      |
+|----------|---------------------------|
+| ADD      |     32*210 + 60 = 6780    |
+| SUBTRACT |    6780 + 32*10 = 7100    |
+| XOR      |        32*60 = 1920       |
+| SLT      | 7100 + 120 + 32*30 = 8180 |
+| AND      |        32*30 = 960        |
+| NAND     |        32*20 = 640        |
+| NOR      |        32*20 = 640        |
+| OR       |        32*30 = 960        |
+Total Cost: 27180
+
+This shows us that our ALU is absolutely huge. However, there are a couple of reasons that this was beneficial for us. Firstly, and most practially, this is the easiest design to impliment. Each piece works separately, and we just have to select between them, without having to wory about complex interactions between the bits for strange operations like subtraction, and less than. Second, turning each bit of this ALU into a bitwise slice does add extra layers: All of these stages would have fairly short delays, which would be slightly lengthened by the gates that we would have to add to slice it in a bitwise manner.
 
 ## Work Plan Reflection
 | Task                    | Estimated Time to Complete | Actual Time Elapsed       |
@@ -70,6 +86,6 @@ We made a signed sign extender designed to take in immediates and output the sig
 | XORI instr              | 1.5 hours                  | 30 minutes                |
 | ADD, SUB instr          | 1.5 hours                  | 30 minutes                |
 | SLT instr               | 1.5 hours                  | 30 minutes                |
-| fit everything together | 4 hours                    | 10 hours                  |
+| fit everything together | 4 hours                    | 16 hours                  |
 
 In a lot of regards we were almost right in our expected times, but we did get hung up on a few areas we didn't expect. We hahd anticipated fitting everything together being a difficult task, but actually making the CPU work has proved a tremendous road block. Fixing old modules was something we knew would take time, and we were about right in our estimate. We also had to write new modules that did things a little differently from past implementations, so we went a little over what we anticipated. Getting the instructions together took much less time than we anticipated. Designing the processor base was less intensive than expected, but still took a sizable chunk of time. Being sure the main cpu file talked to the other modules correctly was a lesson in being thorough. Additionally, making sure the port sizes were correct was far more of a trial than anticipated.
