@@ -12,7 +12,7 @@
 module mips_cpu
 (
   input clk,
-  output[31:0] error_code
+  output reg[31:0] error_code
 );
   wire[31:0] instruction_addr = 32'd0;
   wire[31:0] next_instruction_addr = 32'd4;
@@ -23,14 +23,13 @@ module mips_cpu
   wire[25:21] rs;
   wire[25:0] jump_instruction_addr;
   wire[27:0] jump_instruction_addr_shifted;
-  wire[20:16] rt;
+  wire[20:16] rt, rt_or_2;
   wire[15:11] rd;
   wire[10:6] shft;
   wire[5:0] func;
   wire[15:0] imm;
   wire[4:0] write_addr, normal_write_addr;
   wire[2:0] alu_op;
-  reg error_mux_select;
   wire reg_dest, alu_src, zero_flag,reg_write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
        pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override;
 
@@ -42,7 +41,7 @@ module mips_cpu
   mux #(1) bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
   // PC register
-  // register32 PC(instruction_addr, next_instruction_addr, 1'b0, clk);
+  // register32 PC(instruction_addr, next_instruction_addr, 1'b1, clk);
 
   // PC incrementer
   adder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4);
@@ -79,11 +78,12 @@ module mips_cpu
   leftShift32 #(2) immediate_shifter(extended_immediate, shifted_extended_immediate, 1'b1, clk);
 
   // mux selector for error output
-  // mux #(5) rt_mux(rt, 5'd2, error_mux_select, rt); // figure out why this sets rt to 0X
+  // uses clk as selector to repeatedly get output from $v0 for error code
+  mux #(5) rt_mux(rt, 5'd2, clk, rt_or_2);
 
   // operational register module
   // async_register register(read_1, read_2, write_data, read_addr_1, read_addr_2, write_addr, write_enable, clk);
-  registerfile register(read_1, read_2, write_data, rs, rt, write_addr, reg_write_enable, clk);
+  registerfile register(read_1, read_2, write_data, rs, rt_or_2, write_addr, reg_write_enable, clk);
 
   // alu source mux
   mux #(32) alu_src_mux(read_2, extended_immediate, alu_src, b);
@@ -102,13 +102,10 @@ module mips_cpu
   // optionally forces register to write PC+4 to whatever address
   // useful for jal operations
   mux #(32) jal_data_mux(normal_write_data, instruction_addr_plus4, jal_reg_override, write_data);
-/*
-  always @(posedge clk) begin
-    error_mux_select = 1'b1;
-    #10
-    error_code = read_2;
-    error_mux_select = 1'b0;
+
+ always @(posedge clk) begin
+    if(rt_or_2 == 5'd2) begin
+      error_code = read_2;
+    end
   end
-*/
-  assign error_code = (rt == 5'd2 ? read_2 : 32'd0);
 endmodule

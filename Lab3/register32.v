@@ -7,7 +7,7 @@ module register32
 );
   always @(posedge clk) begin
     if (wrenable) begin
-      q = d;
+      q <= d;
     end
   end
 endmodule
