@@ -6,7 +6,7 @@
 `include "doubleLeftShift.v"
 `include "signExtends.v"
 `include "registerfile.v"
-`include "register32.v"
+`include "PCregister.v"
 `include "datamemory.v"
 `include "instrmemory.v"
 module mips_cpu
@@ -14,9 +14,9 @@ module mips_cpu
   input clk,
   output reg[31:0] error_code
 );
-  wire[31:0] instruction_addr = 32'd0;
-  wire[31:0] next_instruction_addr = 32'd4;
-  wire[31:0] write_data, normal_write_data, mem_read, alu_res, instruction_addr_plus4, instruction_addr_plus_immediate,
+  initial error_code = 32'd0;
+  wire[31:0] instruction_addr, next_instruction_addr, write_data, normal_write_data,
+             mem_read, alu_res, instruction_addr_plus4, instruction_addr_plus_immediate,
              jumped_pc, extended_immediate, shifted_extended_immediate, b,
              normal_pc, pc_jump_addr, read_1, read_2;
   wire[31:26] op;
@@ -41,7 +41,7 @@ module mips_cpu
   mux #(1) bne_pc_override_mux(pc_src, zero_flag, bne_pc_override, pc_choose);
 
   // PC register
-  // register32 PC(instruction_addr, next_instruction_addr, 1'b1, clk);
+  PCreg PC(instruction_addr, next_instruction_addr, clk);
 
   // PC incrementer
   adder pc_incrementer(instruction_addr_plus4, instruction_addr, 32'd4);
@@ -63,7 +63,7 @@ module mips_cpu
   concatenator jump_add_concat(instruction_addr_plus4, jump_instruction_addr_shifted, clk, pc_jump_addr);
 
   // instruction memory module
-  instrmemory instruction_memory(instruction_addr, op, rs, rt, rd, shft, func, imm, jump_instruction_addr);
+  instrmemory #(100) instruction_memory(instruction_addr, op, rs, rt, rd, shft, func, imm, jump_instruction_addr);
 
   // instruction register destination mux
   mux #(5) reg_dest_mux(rt, rd, reg_dest, normal_write_addr);
@@ -103,7 +103,7 @@ module mips_cpu
   // useful for jal operations
   mux #(32) jal_data_mux(normal_write_data, instruction_addr_plus4, jal_reg_override, write_data);
 
- always @(posedge clk) begin
+  always @(posedge clk) begin
     if(rt_or_2 == 5'd2) begin
       error_code = read_2;
     end
