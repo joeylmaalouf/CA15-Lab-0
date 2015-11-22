@@ -14,10 +14,10 @@ module instrmemory
   reg[31:0] mem[n_instr-1:0];
   reg[31:0] instr;
   reg[31:0] index;
-  initial $readmemh("tests.dat", mem);
+  initial $readmemh("tests.dat", mem); // tests in hex format
   always @(address) begin
     index = address / 4;
-    if (index > n_instr-1) $stop;
+    if (index > n_instr-1) $stop; // we've reached the end of our instructions
     instr = mem[index[6:0]];
     op = instr[31:26];
     rs = instr[25:21];
