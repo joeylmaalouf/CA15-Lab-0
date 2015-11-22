@@ -12,13 +12,11 @@
 module mips_cpu
 (
   input clk,
-  output reg[31:0] error_code
+  output[31:0] error_code
 );
   wire[31:0] instruction_addr = 32'd0;
   wire[31:0] next_instruction_addr = 32'd4;
-  wire[31:0] write_data;
-  wire[31:0] normal_write_data;
-  wire[31:0] mem_read, alu_res, instruction_addr_plus4, instruction_addr_plus_immediate,
+  wire[31:0] write_data, normal_write_data, mem_read, alu_res, instruction_addr_plus4, instruction_addr_plus_immediate,
              jumped_pc, extended_immediate, shifted_extended_immediate, b,
              normal_pc, pc_jump_addr, read_1, read_2;
   wire[31:26] op;
@@ -81,7 +79,7 @@ module mips_cpu
   leftShift32 #(2) immediate_shifter(extended_immediate, shifted_extended_immediate, 1'b1, clk);
 
   // mux selector for error output
-  // mux #(5) rs_mux(rs, 5'd2, error_mux_select, rs); // figure out why this sets rs from 00 to 0X
+  // mux #(5) rt_mux(rt, 5'd2, error_mux_select, rt); // figure out why this sets rt to 0X
 
   // operational register module
   // async_register register(read_1, read_2, write_data, read_addr_1, read_addr_2, write_addr, write_enable, clk);
@@ -104,11 +102,13 @@ module mips_cpu
   // optionally forces register to write PC+4 to whatever address
   // useful for jal operations
   mux #(32) jal_data_mux(normal_write_data, instruction_addr_plus4, jal_reg_override, write_data);
-
+/*
   always @(posedge clk) begin
     error_mux_select = 1'b1;
     #10
-    error_code = read_1;
+    error_code = read_2;
     error_mux_select = 1'b0;
   end
+*/
+  assign error_code = (rt == 5'd2 ? read_2 : 32'd0);
 endmodule
