@@ -40,6 +40,5 @@ module ALU(
       `NOR:  begin result = results[`NOR ]; end
       `OR:   begin result = results[`OR  ]; end
     endcase
-//  #1000;
   end
 endmodule
