@@ -1,6 +1,3 @@
-//`include "logic.v"
-`include "arithmetic.v"
-
 `define ADD  3'd0
 `define SUB  3'd1
 `define XOR  3'd2
@@ -9,36 +6,24 @@
 `define NAND 3'd5
 `define NOR  3'd6
 `define OR   3'd7
-
 module ALU(
   output reg[31:0] result,
-  output           carryout,
-  output           zero,
-  output reg       overflow,
+  output reg       zero,
   input[31:0]      operandA,
   input[31:0]      operandB,
   input[2:0]       command
 );
-  wire[31:0] results[0:7];
-  wire[1:0] overflows;
-  bitwiseADD  bADD (results[`ADD ], overflows[`ADD], operandA, operandB, 1'b0);
-  bitwiseSUB  bSUB (results[`SUB ], overflows[`SUB], operandA, operandB, 1'b0);
-  lessThan    bSLT (results[`SLT ], operandA, operandB);
-  bitwiseXOR  bXOR (results[`XOR ], operandA, operandB);
-  bitwiseAND  bAND (results[`AND ], operandA, operandB);
-  bitwiseOR   bOR  (results[`OR  ], operandA, operandB);
-  bitwiseINV  bNAND(results[`NAND], results[`AND]);
-  bitwiseINV  bNOR (results[`NOR ], results[`OR ]);
-  always @(command or operandA or operandB) begin // re-calculate when the command or operands are changed
+  always @(command or operandA or operandB) begin
     case (command)
-      `ADD:  begin result = results[`ADD ]; overflow = overflows[`ADD]; end
-      `SUB:  begin result = results[`SUB ]; overflow = overflows[`SUB]; end
-      `XOR:  begin result = results[`XOR ]; end
-      `SLT:  begin result = results[`SLT ]; end
-      `AND:  begin result = results[`AND ]; end
-      `NAND: begin result = results[`NAND]; end
-      `NOR:  begin result = results[`NOR ]; end
-      `OR:   begin result = results[`OR  ]; end
+      `ADD:  assign result = operandA + operandB;
+      `SUB:  assign result = operandA - operandB;
+      `XOR:  assign result = operandA ^ operandB;
+      `SLT:  assign result = operandA < operandB;
+      `AND:  assign result = operandA & operandB;
+      `NAND: assign result = operandA ~& operandB;
+      `NOR:  assign result = operandA ~| operandB;
+      `OR:   assign result = operandA | operandB;
     endcase
+    assign zero = (result == 0);
   end
 endmodule

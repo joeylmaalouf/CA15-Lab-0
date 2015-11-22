@@ -34,7 +34,7 @@ module mips_cpu
   wire[2:0] alu_op;
   reg error_mux_select;
   wire reg_dest, alu_src, zero_flag,reg_write_enable, mem_write_enable, mem_read_enable, mem_to_reg, 
-       pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override, carryout;
+       pc_src, jump_enable, bne_pc_override, pc_choose, jal_reg_override;
 
   // control module
   control_module cpu_control(op, func, reg_dest, alu_src, mem_write_enable, mem_to_reg, pc_src, reg_write_enable, mem_read_enable, alu_op, jump_enable, bne_pc_override, jal_reg_override);
@@ -91,8 +91,8 @@ module mips_cpu
   mux #(32) alu_src_mux(read_2, extended_immediate, alu_src, b);
 
   // alu module
-  // ALU alu(a, b, alu_res, zero_flag);
-  ALU alu(alu_res, carryout, zero_flag, overflow, read_1, b, alu_op);
+  // ALU alu(res, zero, a, b, op);
+  ALU alu(alu_res, zero_flag, read_1, b, alu_op);
 
   // data memory module
   // data_memory data_mem(clk, mem_read_addr, mem_write_addr, mem_read_enable, mem_write_enable, mem_write_data_in, mem_read_data_out);
