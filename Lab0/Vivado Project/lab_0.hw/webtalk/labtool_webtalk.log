@@ -1,0 +1,13 @@
+
+****** Webtalk v2015.2 (64-bit)
+  **** SW Build 1266856 on Fri Jun 26 16:35:25 MDT 2015
+  **** IP Build 1264090 on Wed Jun 24 14:22:01 MDT 2015
+    ** Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
+
+source C:/Users/dbishop/Documents/GitHub/CA15-Lab-0/lab_0/lab_0.hw/webtalk/labtool_webtalk.tcl -notrace
+webtalk_transmit: Time (s): cpu = 00:00:00 ; elapsed = 00:00:20 . Memory (MB): peak = 63.664 ; gain = 0.250
+
+    while executing
+"webtalk_transmit -clientid 2315667225 -regid "211094766_0_0_167" -xml C:/Users/dbishop/Documents/GitHub/CA15-Lab-0/lab_0/lab_0.hw/webtalk/usage_statis..."
+    (file "C:/Users/dbishop/Documents/GitHub/CA15-Lab-0/lab_0/lab_0.hw/webtalk/labtool_webtalk.tcl" line 28)
+INFO: [Common 17-206] Exiting Webtalk at Fri Oct 02 11:29:02 2015...
