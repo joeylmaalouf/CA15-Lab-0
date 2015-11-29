@@ -39,7 +39,7 @@ Concatenator:
 We set the concatenator to take four bits of the most significant bits of a mock PC address and told it to concatenate with a jump instruction, to make a 32-bit usable address. We expected this to start with a 4-bit and a 28-bit signal and end with a 32-bit signal with the leading significant bits being the 4-bit.
 
 CPU:
-We made a test bench to throw everything together and make the CPU work. We experienced great difficulty attempting to start the CPU and get it to contain anything but undriven wires. We expected to get a zero value on an error flag, meaning the CPU ran without a problem. Results pending.
+We made a test bench to throw everything together and make the CPU work. We experienced great difficulty attempting to start the CPU and get it to contain anything but undriven wires. We expected to get a zero value on an error flag, meaning the CPU ran without a problem. After a large amount of troubleshooting we realized we had some components taking more time than they should, and that we didnt have an intitial address. When fixed, our instructions ran perfectly and the CPU performed as expected.
 
 Data Memory:
 We set up the data memory file to be given a variety of information with the addresses to store them, and we expected to find the data where we told the data memory to store it. We successfully found the correct data in the correct location.
