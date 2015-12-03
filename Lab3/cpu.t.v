@@ -10,5 +10,7 @@ module CPUTest();
   always #10 clk = !clk;
   always @(error_code) begin
     $display("Error code: %d", error_code);
+    // if a nonzero error code pops up,
+    // one of the test cases failed
   end
 endmodule
